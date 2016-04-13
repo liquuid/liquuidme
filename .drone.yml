@@ -1,0 +1,14 @@
+image: needcaffeine/git
+script:
+- echo hello world
+deploy:  
+  rsync:
+    user: core
+    host: povosisolados.hacklab.com.br
+    port: 22
+    source: src/
+    target: /srv/liquuidme/
+    delete: false
+    recursive: true
+    commands:
+      - sudo chmod -Rv og+w /srv/liquuidme
