@@ -1,0 +1,57 @@
+/**
+ * gravatar wrapper
+ *
+ * IMPORTANT: Do NOT add _width_ or _height_ here, there defined dynmically by the plugin!
+ */
+div#gravatargrid {
+  border: 0;
+  border: 0;
+  padding: 0;
+  text-align: center;
+}
+/**
+ * gravatar links
+ */
+div#gravatargrid a:link, div#gravatargrid a:active, div#gravatargrid a:visited, div#gravatargrid a:hover {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+/**
+ * gravatar images inside of links
+ */
+div#gravatargrid img,
+div#gravatargrid a:link img, div#gravatargrid a:active img, div#gravatargrid a:visited img {
+  border: 0;
+  padding: 1px;
+  margin: 0;
+  opacity: .75;
+  filter: alpha(opacity=75);
+}
+/**
+ * gravatar images:hover
+ */
+div#gravatargrid a:hover img {
+  border: 1px solid #ABADB3;
+  padding: 0px;
+  margin: 0;
+  opacity: 1.0;
+  filter: alpha(opacity=100);
+}
+/**
+ * gravatar footer
+ */
+div#gravatargrid div {
+  text-decoration: underline;
+}
+div#gravatargrid div, div#gravatargrid div a:link, div#gravatargrid div a:active, div#gravatargrid div a:visited, div#gravatargrid div a:hover {
+  background: none !important;
+  color: #aaa;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  text-align: right;
+  font-weight: normal;
+  text-decoration: none;
+  font-size: 9px;
+}

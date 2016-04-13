@@ -1,0 +1,634 @@
+/*
+Theme Name: NewDark
+Theme URI: http://gamerpotion.blogspot.co.uk/2014/05/newdark.html
+Author: GamerPotion
+Author URI: http://gamerpotion.blogspot.co.uk
+Description: A simplistic layout with a dark design. Perfect for bloggers who prefer darker styles. Features:- Fluid layout, Featured images, Custom logo, Neat typography. NewDark uses NewTek theme as a base.
+Version: 1.1.7
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: dark, black, two-columns, right-sidebar, fluid-layout, custom-header, featured-images, editor-style
+Text Domain: newdark
+This theme, like WordPress, is licensed under the GPL.
+Font: http://www.google.com/fonts/specimen/Lato
+NewDark Wordpress Theme Copyright (c) 2014 GamerPotion.
+*/
+
+
+/**
+ * Table of Contents
+ *
+ * 1.0 Body
+ * 2.0 Headings
+ * 3.0 Layout
+ * 4.0 Title and Logo
+ * 5.0 Content area
+ *  5.1 Content Post title
+ *  5.2 Content Continue Reading text
+ *  5.3 Content Comments, Categories, Tags area
+ *  5.4 Content Gallery, Captions and Post images
+ * 6.0 Content Comments
+ *  6.1 Content Comments text
+ *  6.2 Content Comments numbers
+ * 7.0 Right Sidebar
+ *  7.1 Sidebar Widget titles
+ *  7.2 Additional Sidebar items
+ * 8.0 Delimiter for clearing both
+ * 9.0 Pagination
+ * 10.0 Footer Copyright area
+ * 11.0 Search form
+ * 12.0 Navigation menu
+ * 13.0 Media queries
+ * ------------------
+ */
+
+
+/**
+ * 1.0 Body
+ * ------------------
+ */
+
+body { font-family: 'Lato', sans-serif; background-color:#1d1d1d; color: #f4f4f4; margin: 0 auto; padding:0; font-size:14pt; }
+
+body a { font-family: 'Lato', sans-serif; text-decoration:none; color:#808080; font-size:14pt; }
+
+body a:hover { font-family: 'Lato', sans-serif; text-decoration:none; color:#88b5e3; font-size:14pt; }
+
+a:link { text-decoration:none; font-family: 'Lato', sans-serif; }
+
+a:visited { text-decoration:none; font-family: 'Lato', sans-serif; }
+
+a:hover { text-decoration:none; font-family: 'Lato', sans-serif; }
+
+a:active { text-decoration:none; font-family: 'Lato', sans-serif; }
+
+
+/**
+ * 2.0 Headings
+ * ------------------
+ */
+
+h1 { font-family: 'Lato', sans-serif; font-size: 15pt; color:#f4f4f4; }
+
+h2 { font-family: 'Lato', sans-serif; font-size: 14pt; color:#f4f4f4; }
+
+h3 { font-family: 'Lato', sans-serif; font-size: 13pt; color:#f4f4f4; }
+
+h4 { font-family: 'Lato', sans-serif; font-size: 12pt; color:#f4f4f4; }
+
+h5 { font-family: 'Lato', sans-serif; font-size: 11pt; color:#f4f4f4; }
+
+h6 { font-family: 'Lato', sans-serif; font-size: 10pt; color:#f4f4f4; }
+
+
+/**
+ * 3.0 Layout - Container 1 is logo area, Container 2 is in footer, Container 3 is the navigation menu
+ * ------------------
+ */
+
+#wrapper { font-family: 'Lato', sans-serif; display: block; width:92%; max-width:1600px !important; margin:auto; background-color:#1d1d1d; padding: 0px 0px 5px 0px; clear: both; }
+
+#wrapper a { font-family: 'Lato', sans-serif; text-decoration:none; }
+
+#header { text-align: center; margin: 0 auto; padding: 0; width:100%; max-width:1600px !important; clear: both; }
+
+#container { font-family: 'Lato', sans-serif; width:100%; height: auto; overflow:hidden; clear: both; background-color:#1d1d1d; padding: 0; margin: 0 auto; text-align: center; }
+
+#container2 { font-family: 'Lato', sans-serif; text-align:center; width:100%; background-color:#000000; clear: both; margin: 0 auto; border-top: 1px solid #111111; padding: 20px 0px 20px 0px; overflow:hidden; }
+
+#container3 { font-family: 'Lato', sans-serif; text-align:center; width:95%; max-width:1600px !important; background-color:#2d2d2d;  margin: 0 auto;  padding: 0px 0px 0px 0px; display: block; border-radius: 3px; }
+
+#footer { text-align: center; margin: 0 auto; width:100%; max-width:1600px !important; clear: both; padding-bottom:20px; padding-left:20px; padding-right:20px; }
+
+
+/**
+ * 4.0 Title and Logo
+ * ------------------
+ */
+
+.site-title { text-align:center; font-family: 'Lato', sans-serif; color: #ffffff; font-size: 80pt; font-weight:300; padding-top:5px; padding-bottom:5px; max-width:100% !important; word-wrap: break-word; text-transform:none; }
+
+.site-title a { font-family: 'Lato', sans-serif; color: #ffffff; font-size: 80pt; font-weight:300; max-width:100% !important; word-wrap: break-word; text-transform:none; }
+
+.site-title a:hover { font-family: 'Lato', sans-serif; color: #ffffff; font-size: 80pt; text-decoration:none; font-weight:300; max-width:100% !important; word-wrap: break-word; text-transform:none; }
+
+.site-description { font-family: 'Lato', sans-serif; font-size: 15pt; color:#cccccc; text-transform: none; padding: 0px 30px 30px 30px; word-wrap: break-word; }
+
+.site-logo { margin: 0 auto; padding-top:20px; padding-bottom:20px; }
+
+
+/**
+ * 5.0 Content area
+ * ------------------
+ */
+
+#content { font-family: 'Lato', sans-serif; width: 66%; float:left; background-color:#1d1d1d; color:#f4f4f4;  font-size:14pt; clear:both; margin-top:40px; word-wrap: break-word; }
+
+#content a { font-family: 'Lato', sans-serif; text-decoration:none; }
+
+#content a:hover { font-family: 'Lato', sans-serif; text-decoration:none; }
+
+.sticky { font-family: 'Lato', sans-serif; text-decoration:none; margin:0px; padding:10px; border-top: 5px dotted #353535; }
+
+blockquote {
+	margin: 1em 3em;
+	padding: .5em;
+        color: #eaeaea;
+	background-color: #141414; 
+        font-family: 'Lato', sans-serif; 
+        border: none; outline:none; }
+
+blockquote p {
+	margin: 0; 
+        border: none; outline:none; }
+
+#content iframe { max-width:640px !important; max-height: 350px !important; }
+
+.post a {
+  color: #808080;
+  text-decoration: none;
+  font-family: 'Lato', sans-serif;
+}
+
+.post a:hover {
+  color: #88b5e3;
+  text-decoration: none;
+  font-family: 'Lato', sans-serif;
+}
+
+hr {
+  border: 0;
+  width: 90%;
+background-color: #f5f5f5;
+height: 2px;
+}
+
+.size-auto, 
+.size-full,
+.size-large,
+.size-medium,
+.size-thumbnail {
+	max-width: 100%;
+	height: auto;
+}
+
+table,
+th,
+td { border: 1px solid #bbbbbb; }
+
+table {	border-collapse: separate;
+	border-spacing: 0;
+	border-width: 1px 0 0 1px;
+	margin-bottom: 20px;
+	width: 100%; }
+
+
+/**
+ * 5.1 Content Post title
+ * ------------------
+ */
+
+.post-title { font-weight:200; max-width:970px !important; height:auto; white-space: pre-wrap; word-wrap: break-word; font-family: 'Lato', sans-serif; }
+
+.post-title a { font-family: 'Lato', sans-serif; font-size: 30pt; color: #88b5e3; text-transform:none; font-weight:200; }
+
+.post-title a:hover { font-family: 'Lato', sans-serif; font-size: 30pt; color: #88b5e3; text-transform:none; font-weight:200; }
+
+.post-date { font-family: 'Lato', sans-serif; font-size: 10pt; color: #bbbbbb; }
+
+.post-date a { font-family: 'Lato', sans-serif; font-size: 10pt; color: #808080; }
+
+.post-date a:hover { font-family: 'Lato', sans-serif; font-size: 10pt; color: #88b5e3; }
+
+
+/**
+ * 5.2 Content Continue Reading text
+ * ------------------
+ */
+
+more-link a:hover { text-decoration: none; text-transform: none; }
+
+a.more-link { font-family: 'Lato', sans-serif; margin:0px; clear:both;
+	color: #9dffd4;	text-decoration:none; }
+
+a:hover.more-link { font-family: 'Lato', sans-serif; margin:0px; clear:both;
+	color: #e388af;	text-decoration:none; }
+
+.post a.more-link { font-family: 'Lato', sans-serif; margin:0px; clear:both;
+	color: #9dffd4;	text-decoration:none; }
+
+.post a:hover.more-link { font-family: 'Lato', sans-serif; margin:0px; clear:both;
+	color: #e388af;	text-decoration:none; }
+
+
+/**
+ * 5.3 Content Comments, Categories, Tags area
+ * ------------------
+ */
+
+.commentstext { text-decoration:none; clear: both; display: block; font-family: 'Lato', sans-serif; font-size: 10pt; background-color:#141414; border-bottom: 1px solid #000000; padding:10px; }
+
+.commentstext a { text-decoration:none;  font-family: 'Lato', sans-serif; font-size: 10pt; }
+
+.commentstext a:hover { text-decoration:none;  font-family: 'Lato', sans-serif; font-size: 10pt; }
+
+.bypostauthor { font-family: 'Lato', sans-serif; text-decoration:none; }
+
+
+/**
+ * 5.4 Content Gallery, Captions and Post images
+ * ------------------
+ */
+
+.gallery-caption { font-family: 'Lato', sans-serif; text-decoration:none; color:#bbbbbb; }
+
+a, img {
+    border:none;
+}
+
+#content img {
+    border:none;
+max-width:640px !important;
+height:auto;
+}
+
+#content img a {
+    border:none;
+max-width:640px !important;
+height:auto;
+}
+
+pre, code { max-width:640px !important; height:auto; white-space: pre-wrap; word-wrap: break-word; font-family: 'Lato', sans-serif; }
+
+pre { margin: 1em 3em;
+	padding: .5em;
+        color: #eaeaea;
+	background-color: #141414; 
+        font-family: 'Lato', sans-serif; 
+        border: none; outline:none; }
+
+.alignnone {
+    margin: 0px 20px 0px 0;
+padding-top:12px;
+max-width:640px !important;
+height:auto;
+}
+
+.aligncenter,
+div.aligncenter {
+    display: block;
+    margin: 5px auto 5px auto;
+max-width:640px !important;
+height:auto;
+}
+
+.alignright {
+    float:right;
+    margin: 5px 0 20px 20px;
+max-width:640px !important;
+height:auto;
+}
+
+.alignleft {
+    float: left;
+    display: block;
+    margin: 20px 20px 20px 0;
+max-width:640px !important;
+height:auto;
+}
+
+.aligncenter {
+    display: block;
+    margin: 5px auto 5px auto;
+max-width:640px !important;
+height:auto;
+}
+
+a img.alignright {
+    float: right;
+    margin: 5px 0 20px 20px;
+max-width:640px !important;
+height:auto;
+}
+
+a img.alignnone {
+    margin: 0px 20px 0px 0;
+padding-top:12px;
+max-width:640px !important;
+height:auto;
+}
+
+a img.alignleft {
+    float: left;
+    margin: 20px 20px 20px 0;
+max-width:640px !important;
+height:auto;
+}
+
+a img.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+max-width:640px !important;
+height:auto;
+}
+
+.wp-caption {
+    max-width: 96%; /* Image does not overflow the content area */
+    padding: 0px 0px 0px;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+background-color:transparent;
+border-width:0px;
+}
+
+.wp-caption.alignnone {
+    margin: 0px 0px 0px 0;
+}
+
+.wp-caption.alignleft {
+    margin: 0px 10px 0px 0;
+}
+
+.wp-caption.alignright {
+    margin: 0px 0 0px 10px;
+}
+
+.wp-caption img {
+    border: none;
+    height: auto;
+ max-width:640px !important;
+height:auto;
+}
+
+.wp-caption p.wp-caption-text {
+    font-size: 12pt;
+    line-height: 17px;
+    margin: 0;
+    padding: 0 0px 0px;
+    color:#bbbbbb;
+    font-family: 'Lato', sans-serif;
+}
+
+.post img {
+max-width:640px !important;
+height:auto;
+}
+
+
+/**
+ * 6.0 Content Comments
+ * ------------------
+ */
+
+#comment { font-family: 'Lato', sans-serif; background-color: #141414; color:#eaeaea; border-width:1px; border-color:#111111; border-style:solid; outline:none; width:500px; display:block; clear:both; padding:5px 5px 5px 5px; }
+
+#author { font-family: 'Lato', sans-serif; background-color: #141414; color:#eaeaea; border-width:1px; border-color:#111111; border-style:solid; outline:none; width:500px; display:block; clear:both; padding:5px 5px 5px 5px; }
+
+#email { font-family: 'Lato', sans-serif; background-color: #141414; color:#eaeaea; border-width:1px; border-color:#111111; border-style:solid; outline:none; width:500px; display:block; clear:both; padding:5px 5px 5px 5px; }
+
+#url { font-family: 'Lato', sans-serif; background-color: #141414; color:#eaeaea; border-width:1px; border-color:#111111; border-style:solid; outline:none; width:500px; display:block; clear:both; padding:5px 5px 5px 5px; }
+
+#comment #submit { text-decoration:none; color: #f5f5f5; background: #2d2d2d; border: none; font-family: 'Lato', sans-serif; outline:none; }
+
+#comment #submit:hover { text-decoration:none; color: #88b5e3; background: #2d2d2d; border: none; font-family: 'Lato', sans-serif; outline:none; text-decoration:none; }
+
+.reply { padding: 0px 0px 40px 0px; border: none; outline:none; }
+
+.reply a { text-decoration:none; color: #f5f5f5; background: #2d2d2d; border: none; font-family: 'Lato', sans-serif; outline:none; padding: 5px 10px 5px 10px; } 
+
+.reply a:hover { text-decoration:none; color: #88b5e3; background: #2d2d2d; border: none; font-family: 'Lato', sans-serif; outline:none; padding: 5px 10px 5px 10px; }
+
+#submit { text-decoration:none; color: #f5f5f5;	background: #2d2d2d; border: none; font-family: 'Lato', sans-serif; outline:none; padding: 5px 10px 5px 10px; } 
+
+#submit:hover { text-decoration:none; color: #88b5e3; background: #2d2d2d; border: none; font-family: 'Lato', sans-serif; outline:none; padding: 5px 10px 5px 10px; text-decoration:none; } 
+
+
+/**
+ * 6.1 Content Comments text - Hides allowed text description under comments text box. Delete display:none to show.
+ * ------------------
+ */
+
+.form-allowed-tags { font-family: 'Lato', sans-serif; font-size:12pt; display:none; }
+
+
+/**
+ * 6.2 Content Comments numbers - Hides comment list numbers. Delete below section to show list numbers.
+ * ------------------
+ */
+
+ol.comment-list {
+	list-style-type:none;
+	margin: 0;
+}
+
+ol.children {
+	list-style-type:none;
+	margin: 0;
+}
+
+
+/**
+ * 7.0 Right Sidebar
+ * ------------------
+ */
+
+#sidebar { font-family: 'Lato', sans-serif; width: 23%; float: right; background-color:#292929; color:#f4f4f4; padding: 10px 40px 0px 40px; margin-top: 40px; border-radius: 3px; }
+
+#sidebar ul li a { font-family: 'Lato', sans-serif; text-decoration:none; font-size: 11pt; color:#808080; }
+
+#sidebar ul li a:hover { font-family: 'Lato', sans-serif; text-decoration:none; font-size: 11pt; color:#88b5e3; }
+
+#sidebar ul { font-family: 'Lato', sans-serif; text-decoration:none; clear:both; padding:0; }
+
+#sidebar li { font-family: 'open sans', sans-serif; list-style-type: none;
+        list-style-position:inside;
+        margin:0;
+        padding:0; word-wrap: break-word;
+	border:none; }
+
+#sidebar .menu li { font-family: 'Lato', sans-serif; list-style-type: none; }
+
+#sidebar ul .sub-menu { list-style-type: none; }
+
+#sidebar li ul { list-style-type: none; padding-left:10px; }
+
+#sidebar li ul li { list-style-type: none; }
+
+#sidebar li ul .sub-menu { list-style-type: none; }
+
+#sidebar ul .sub-menu li { list-style-type: none; }
+
+
+/**
+ * 7.1 Sidebar Widget titles
+ * ------------------
+ */
+
+.sidebarhd { font-family: 'Lato', sans-serif; text-decoration:none; margin:5px; font-size: 20pt;
+        padding: 5px 20px 0px 20px;
+	color: #f5f5f5;
+	text-align:center; clear:both;
+        font-weight: 200; height:auto; white-space: pre-wrap; 
+        word-wrap: break-word; }
+
+.sidebarhd a { font-family: 'Lato', sans-serif; text-decoration:none; color: #88b5e3; }
+
+.sidebarhd a:hover { font-family: 'Lato', sans-serif; text-decoration:none; color: #88b5e3; }
+
+sidebar.sidebarhd { width:100%; max-width:100% !important; height:auto; white-space: pre-wrap; word-wrap: break-word; }
+
+
+/**
+ * 7.2 Additional Sidebar items
+ * ------------------
+ */
+
+.rsswidget { font-family: 'Lato', sans-serif; text-decoration:none; color: #f5f5f5; word-wrap: break-word; margin: 0 auto; }
+
+.rssSummary { font-family: 'Lato', sans-serif; text-decoration:none; color: #f5f5f5; word-wrap: break-word; margin: 0 auto; padding: 0; }
+
+.textwidget { font-family: 'Lato', sans-serif; list-style: none; padding:0; height:auto; word-wrap: break-word; margin: 0 auto; }
+
+.textwidget iframe { max-width:99% !important; max-height:99% !important; padding:0; margin: 0 auto; }
+
+.textwidget img { max-width:99% !important; max-height:99% !important; padding:0; margin: 0 auto; }
+
+.textwidget img a { max-width:99% !important; max-height:99% !important; padding:0; margin: 0 auto; }
+
+.textwidget select {  width:99%; word-wrap: break-word; padding:0; margin:10px 0px 20px 0px; text-align: left; }
+
+select { width:99%; word-wrap: break-word; padding:0; margin:10px 0px 20px 0px; text-align: left; }
+
+.tagcloud { margin:0 auto; font-family: 'Lato', sans-serif; list-style:none; margin:10px 0px 0px 0px; padding:0; }
+
+#calendar_wrap table { margin: 0 auto; width:99%; text-align:center; padding:0; border:none;  }
+
+table#wp-calendar { margin:0 auto; }
+
+
+/**
+ * 8.0 Delimiter for clearing both
+ * ------------------
+ */
+
+.delimiter { clear: both; }
+
+.breaker { padding-top:20px; padding-bottom:20px; clear:both; }
+
+
+/**
+ * 9.0 Pagination
+ * ------------------
+ */
+
+.pagi { font-family: 'Lato', sans-serif; color: #808080; text-transform: uppercase; }
+
+.pagi a { font-family: 'Lato', sans-serif; color: #808080; text-transform: uppercase; }
+
+.pagi a:hover { font-family: 'Lato', sans-serif; color:#88b5e3; text-transform: uppercase; }
+
+
+/**
+ * 10.0 Footer Copyright area
+ * ------------------
+ */
+
+.footer-copyright { font-size:14pt; font-family: 'Lato', sans-serif; color: #ffffff; float:left; clear:both; text-transform: none; word-wrap: break-word; max-width:900px; }
+
+.footer-copyright a { font-size:14pt; font-family: 'Lato', sans-serif; color: #88b5e3; clear:both; text-transform: none; word-wrap: break-word; }
+
+.footer-copyright a:hover { font-size:14pt; font-family: 'Lato', sans-serif; color: #88b5e3; clear:both; text-transform: none; word-wrap: break-word; }
+
+.toplink a { font-size:14pt; font-family: 'Lato', sans-serif; color: #88b5e3; float:right; text-transform: none; padding-right:40px; }
+
+.toplink a:hover { font-size:14pt; font-family: 'Lato', sans-serif; color: #808080; float:right; text-transform: none; }
+
+
+/**
+ * 11.0 Search form
+ * ------------------
+ */
+
+#search { float: right; width: 150px; height:auto; padding:15px; padding-top:5px; padding-bottom:5px; border-radius: 3px; }
+
+#searchsubmit { text-decoration:none; color: #f5f5f5; background: #2d2d2d; border: none; font-family: 'Lato', sans-serif; outline:none; }
+
+#searchform { text-align:center; font-family: 'Lato', sans-serif; outline:none; }
+
+#searchform input#s { font-family: 'Lato', sans-serif; background-color: #141414; color:#eaeaea; border-width:1px; border-color:#111111; border-style:solid; outline:none; width:80%; font-size: 13px; }
+
+#s { padding:5px 5px 5px 5px; height:20px; border-radius: 3px; }
+
+
+
+/**
+ * 12.0 Navigation menu
+ * ------------------
+ */
+
+.navtop { width:100%; max-width:1600px !important; }
+
+.navmenu { margin:0 auto; font-family: 'Lato', sans-serif; font-size: 13px; color: #ffffff; text-transform:uppercase; padding-left:10px; }
+
+.navmenu ul { padding:0; margin:0 auto; line-height: 2; font-family: 'Lato', sans-serif; font-size: 14px; color: #ffffff; }
+
+.navmenu ul li { padding:0; margin:0 auto; line-height: 2; font-family: 'Lato', sans-serif; font-size: 14px; color: #ffffff; }
+
+.navmenu ul li a { padding:0; margin:0 auto; line-height: 2; font-family: 'Lato', sans-serif; font-size: 14px; color: #ffffff; }
+
+.navmenu:before { content: ''; display: table; }
+
+.navmenu:after { content: ''; display: table; }
+
+.navmenu > ul:before { content: ''; display: table; }
+
+.navmenu > ul:after { content: ''; display: table; }
+
+.navmenu:after { clear:both; }
+
+.navmenu > ul:after {  }
+
+.navmenu ul { background: #2d2d2d; }
+
+.navmenu ul > li { float: left; list-style: none; }
+
+.navmenu ul > li > a { display: block; text-decoration: none; padding: 7px 20px 7px 20px; position: relative; }
+
+.navmenu ul > li > a:hover { color: #88b5e3; }
+
+.navmenu ul > li > a:hover:before { content: ''; z-index: 2; position: absolute; border-top: 0; border-bottom: 0; border-right: 0; width: 100%; height: 100%; top: 0; left: -1px; }
+
+.navmenu ul > li > a:hover:after { content: ''; z-index: 2; position: absolute; border-top: 0; border-bottom: 0; border-left: 0; width: 100%; height: 100%; top: 0; right: -1px; }
+
+.navmenu > ul > li > ul { opacity: 0; visibility: hidden; position: absolute; }
+
+.navmenu > ul > li:hover > ul { opacity: 1; visibility: visible; position: absolute; box-shadow: none; z-index: 2; }
+
+.navmenu > ul > li > ul { width: 150px; position: absolute; text-align:left; padding-left:10px; }
+
+.navmenu > ul > li > ul > li { float: none; position: relative; }
+
+.navmenu > ul > li > ul > li > ul { opacity: 0; visibility: hidden; position: absolute; }
+
+.navmenu > ul > li > ul > li:hover > ul { opacity: 1; visibility: visible; position: absolute; z-index: 2; }
+
+.navmenu > ul > li > ul > li > ul { left: 150px; top: 0px; width: 150px; text-align:left; padding-left:10px; }
+
+.navmenu > ul > li > ul > li > ul > li { float: none; }
+
+.navmenu .current_page_item > a,
+.navmenu .current_page_ancestor > a,
+.navmenu .current-menu-item > a,
+.navmenu .current-menu-ancestor > a {
+	color: #e388af; }
+
+
+/**
+ * 13.0 Media queries - Add more things here for mobile friendliness.
+ * ------------------
+ */
+
+@media screen and (max-width: 768px) {
+body { width:1600px; }
+}

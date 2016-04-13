@@ -1,0 +1,7 @@
+td input[type=text] { width: 90%}
+th {text-align:right; width:120px}
+div.channel_data { border: 1px solid gray; margin:16px 0 8px 0; padding-bottom:8px}
+div.channel_data span {position:relative; top:-10px; left: 6px; background: white; padding:2px}
+div.channel_data td span {position:relative; top:0px; vertical-align:middle; font-weight: bold; margin-left:12pt}
+div.channel_data table {position:relative; padding-bottom:10px; width:100%}
+#template {display:none}

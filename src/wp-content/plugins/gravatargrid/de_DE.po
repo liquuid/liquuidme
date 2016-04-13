@@ -1,0 +1,198 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gravatargrid\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-06-07 19:31+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: gravatargrid.php:89
+#: svn/tags/0.1/gravatargrid.php:81
+#: svn/tags/0.2/gravatargrid.php:86
+#: svn/tags/0.3/gravatargrid.php:88
+#: svn/trunk/gravatargrid.php:88
+msgid "Settings saved!"
+msgstr "Die Einstellungen wurden gespeichert!"
+
+#: gravatargrid.php:97
+#: svn/tags/0.1/gravatargrid.php:89
+#: svn/tags/0.2/gravatargrid.php:94
+#: svn/tags/0.3/gravatargrid.php:96
+#: svn/trunk/gravatargrid.php:96
+msgid "Title"
+msgstr "Titel"
+
+#: gravatargrid.php:98
+#: svn/tags/0.1/gravatargrid.php:90
+#: svn/tags/0.2/gravatargrid.php:95
+#: svn/tags/0.3/gravatargrid.php:97
+#: svn/trunk/gravatargrid.php:97
+msgid "Title is shown above the grid. If left empty can break your layout in widget mode!"
+msgstr "Der Titel wird &uuml;ber dem GravatarGrid angezeigt. Wenn er leer ist, kann es je nach Template bei den Sidebar Widgets zu Darstellungsproblemen kommen."
+
+#: gravatargrid.php:102
+#: svn/tags/0.1/gravatargrid.php:94
+#: svn/tags/0.2/gravatargrid.php:99
+#: svn/tags/0.3/gravatargrid.php:101
+#: svn/trunk/gravatargrid.php:101
+msgid "Width"
+msgstr "Breite"
+
+#: gravatargrid.php:104
+#: svn/tags/0.1/gravatargrid.php:96
+#: svn/tags/0.2/gravatargrid.php:101
+#: svn/tags/0.3/gravatargrid.php:103
+#: svn/trunk/gravatargrid.php:103
+msgid "Width of grid. Have in mind, that you get 2px extra padding for each image per line."
+msgstr "Beachte: Pro Bild und Zeile kommen 2 Pixel Padding dazu!"
+
+#: gravatargrid.php:108
+#: svn/tags/0.1/gravatargrid.php:100
+#: svn/tags/0.2/gravatargrid.php:105
+#: svn/tags/0.3/gravatargrid.php:107
+#: svn/trunk/gravatargrid.php:107
+msgid "Height"
+msgstr "Höhe"
+
+#: gravatargrid.php:110
+#: svn/tags/0.1/gravatargrid.php:102
+#: svn/tags/0.2/gravatargrid.php:107
+#: svn/tags/0.3/gravatargrid.php:109
+#: svn/trunk/gravatargrid.php:109
+msgid "Height of grid!"
+msgstr "Die Höhe in Piexeln des GravatarGrids."
+
+#: gravatargrid.php:114
+#: svn/tags/0.1/gravatargrid.php:106
+#: svn/tags/0.2/gravatargrid.php:111
+#: svn/tags/0.3/gravatargrid.php:113
+#: svn/trunk/gravatargrid.php:113
+msgid "Max"
+msgstr "Anzahl"
+
+#: gravatargrid.php:116
+#: svn/tags/0.1/gravatargrid.php:108
+#: svn/tags/0.2/gravatargrid.php:113
+#: svn/tags/0.3/gravatargrid.php:115
+#: svn/trunk/gravatargrid.php:115
+msgid "Max. number of Gravatars to display in grid!"
+msgstr "Wie viele Gravatare sollen angezeigt werden?"
+
+#: gravatargrid.php:120
+#: svn/tags/0.1/gravatargrid.php:112
+#: svn/tags/0.2/gravatargrid.php:117
+#: svn/tags/0.3/gravatargrid.php:119
+#: svn/trunk/gravatargrid.php:119
+msgid "Padding"
+msgstr "Padding"
+
+#: gravatargrid.php:122
+#: svn/tags/0.1/gravatargrid.php:114
+#: svn/tags/0.2/gravatargrid.php:119
+#: svn/tags/0.3/gravatargrid.php:121
+#: svn/trunk/gravatargrid.php:121
+msgid "Padding of Gravatar images!"
+msgstr "Padding der einzelnen Bilder in Pixel."
+
+#: gravatargrid.php:126
+#: svn/tags/0.1/gravatargrid.php:118
+#: svn/tags/0.2/gravatargrid.php:123
+#: svn/tags/0.3/gravatargrid.php:125
+#: svn/trunk/gravatargrid.php:125
+msgid "Default image"
+msgstr "Alternativen Bild-Stil"
+
+#: gravatargrid.php:128
+#: svn/tags/0.1/gravatargrid.php:120
+#: svn/tags/0.2/gravatargrid.php:125
+#: svn/tags/0.3/gravatargrid.php:127
+#: svn/trunk/gravatargrid.php:127
+msgid "Style of default image if no Gravatar is found"
+msgstr "Wird angezeigt, wenn kein Gravatar gefunden wurde."
+
+#: gravatargrid.php:129
+#: svn/tags/0.3/gravatargrid.php:128
+#: svn/trunk/gravatargrid.php:128
+msgid "or an image url"
+msgstr "oder Bild-Url"
+
+#: gravatargrid.php:130
+#: svn/tags/0.3/gravatargrid.php:129
+#: svn/trunk/gravatargrid.php:129
+msgid "if url is given, it overwrites the selected image style!"
+msgstr "diese Einstellung &uuml;berschreibt den Bild-Stil"
+
+#: gravatargrid.php:134
+#: svn/tags/0.1/gravatargrid.php:124
+#: svn/tags/0.2/gravatargrid.php:129
+#: svn/tags/0.3/gravatargrid.php:133
+#: svn/trunk/gravatargrid.php:133
+msgid "Image rating"
+msgstr "Jugendschutz"
+
+#: gravatargrid.php:136
+#: svn/tags/0.1/gravatargrid.php:126
+#: svn/tags/0.2/gravatargrid.php:131
+#: svn/tags/0.3/gravatargrid.php:135
+#: svn/trunk/gravatargrid.php:135
+msgid "to ensure the images are SFW"
+msgstr "Wähle eine Alterstufe für die Bilder."
+
+#: gravatargrid.php:143
+#: svn/tags/0.1/gravatargrid.php:133
+#: svn/tags/0.2/gravatargrid.php:138
+#: svn/tags/0.3/gravatargrid.php:142
+#: svn/trunk/gravatargrid.php:142
+msgid "Link Gravatar image to owners website"
+msgstr "Verlinke die einzelnen Gravatare auf die Homepage des Besitzers?"
+
+#: gravatargrid.php:151
+#: svn/tags/0.1/gravatargrid.php:141
+#: svn/tags/0.2/gravatargrid.php:146
+#: svn/tags/0.3/gravatargrid.php:150
+#: svn/trunk/gravatargrid.php:150
+msgid "Open link in new window?"
+msgstr "&Ouml;ffne den Link in einem neuen Fenster?"
+
+#: gravatargrid.php:159
+#: svn/tags/0.1/gravatargrid.php:149
+#: svn/tags/0.2/gravatargrid.php:154
+#: svn/tags/0.3/gravatargrid.php:158
+#: svn/trunk/gravatargrid.php:158
+msgid "Set the link to relation nofollow?"
+msgstr "Setze den Link auf rel=\"nofollow\"?"
+
+#: gravatargrid.php:164
+#: svn/tags/0.3/gravatargrid.php:163
+#: svn/trunk/gravatargrid.php:163
+msgid "Exclude emails"
+msgstr "E-Mail's ausschliessen"
+
+#: gravatargrid.php:166
+#: svn/tags/0.3/gravatargrid.php:165
+#: svn/trunk/gravatargrid.php:165
+msgid "One email per line!"
+msgstr "eine E-Mail pro Zeile"
+
+#: gravatargrid.php:172
+#: svn/tags/0.1/gravatargrid.php:156
+#: svn/tags/0.2/gravatargrid.php:161
+#: svn/tags/0.3/gravatargrid.php:171
+#: svn/trunk/gravatargrid.php:171
+msgid "save"
+msgstr "speichern"
+
+#: gravatargrid.php:339
+msgid "No comments found!"
+msgstr "Keine Kommentare gefunden!"
+
+#~ msgid "Width of grid!"
+#~ msgstr "Die Breite in Piexeln des GravatarGrids."
+

@@ -1,0 +1,33 @@
+
+# BEGIN WordPress
+#<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^$ /subdirectory/ [L,QSA]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+
+# Change domain.com to be your primary main domain.
+RewriteCond %{HTTP_HOST} ^blog.liquuid.net$
+
+# Change 'subfolder' to be the folder you want to redirect request to.
+RewriteCond %{REQUEST_URI} !^/2014/
+
+# Don't change this line.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Change 'subfolder' to be the folder you want to use for your primary domain.
+RewriteRule ^(.*)$ /2014/$1
+
+# Change domain.com to be your primary domain again.
+# Change 'subfolder' to be the folder you will use for your primary domain
+# followed by / then the main file for your site, index.php, index.html, etc.
+RewriteCond %{HTTP_HOST} ^blog.liquuid.net$
+RewriteRule ^(/)?$ 2014/index.php [L]
+
+#</IfModule>
+
+# END WordPress
