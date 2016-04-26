@@ -271,7 +271,7 @@ html {
 body {
 	background-color: #242629;
 	color: #6a6c6e;
-	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: "Raleway", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 1.8rem;
 	line-height: 1.62;
 }
@@ -319,7 +319,7 @@ h4,
 h5,
 h6 {
 	color: #1a1c1e;
-	font-family: "Noto Serif", Georgia, serif;
+	font-family: "Raleway", "Noto Serif", Georgia, serif;
 	font-weight: 700;
 	line-height: 1.38;
 }
