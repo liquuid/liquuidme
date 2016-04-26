@@ -686,7 +686,7 @@ button,
 input,
 textarea {
 	border: 1px solid #ddd;
-	color: inherit;
+	/*color: inherit;*/
 	font-family: inherit;
 	font-size: 1.6rem;
 	line-height: 1.5;
@@ -727,6 +727,9 @@ input[type="submit"] {
 	-webkit-transition: all .3s;
 	transition: all .3s;
 	white-space: nowrap;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+
 }
 
 .button:hover,
@@ -761,8 +764,8 @@ input[type="email"],
 input[type="password"],
 input[input="tel"],
 input[input="url"] {
-	-webkit-border-radius: 0;
-	border-radius: 0;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
 	-webkit-appearance: none;
 }
 
@@ -1850,6 +1853,7 @@ footer.comment-footer:after,
 	text-align: left;
 	width: 100%;
 	z-index: 0;
+	background-color: red;
 }
 
 .error404 .search-form .search-submit,
