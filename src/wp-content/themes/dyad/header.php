@@ -41,19 +41,21 @@
 		<nav id="site-navigation" class="main-navigation" role="navigation">
 			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Menu', 'dyad' ); ?></button>
 
-			<form role="search" method="get" class="search-form float-right" action="http://localhost:8000/">
-				<label>
-					<span class="screen-reader-text">Pesquisar por:</span>
-					<input type="search" class="search-field" placeholder="Pesquisar &hellip;" value="" name="s" />
-				</label>
-				<input type="submit" class="search-submit" value="Pesquisar" />
-			</form>
+			<div id="search-menu">
+				<form role="search" method="get" class="search-form float-right" action="http://localhost:8000/">
+					<label>
+						<span class="screen-reader-text">Pesquisar por:</span>
+						<input type="search" class="search-field" placeholder="Pesquisar &hellip;" value="" name="s" />
+					</label>
+					<input type="submit" class="search-submit" value="Pesquisar" />
+				</form>
+			</div>
 			<?php wp_nav_menu( array(
 				'theme_location' => 'primary',
 				'menu_id' => 'primary-menu',
 				'container' => 'div',
 				'container_class' => 'primary-menu',
-			) ); ?>
+			)); ?>
 		</nav>
 
 
