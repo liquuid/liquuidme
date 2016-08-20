@@ -42,7 +42,7 @@
 			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Menu', 'dyad' ); ?></button>
 
 			<div id="search-menu">
-				<form role="search" method="get" class="search-form float-right" action="http://localhost:8000/">
+            <form role="search" method="get" class="search-form float-right" action="<?php echo site_url(); ?>/">
 					<label>
 						<span class="screen-reader-text">Pesquisar por:</span>
 						<input type="search" class="search-field" placeholder="Pesquisar &hellip;" value="" name="s" />
