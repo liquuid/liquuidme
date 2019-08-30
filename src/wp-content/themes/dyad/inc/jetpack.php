@@ -64,9 +64,6 @@ function dyad_get_banner_posts() {
  * Check for minimum number of featured posts
  */
 function dyad_has_banner_posts( $minimum = 1 ) {
-	if ( is_paged() ) {
-		return false;
-	}
 
 	$minimum = absint( $minimum );
 	$featured_posts = apply_filters( 'dyad_get_banner_posts', array() );

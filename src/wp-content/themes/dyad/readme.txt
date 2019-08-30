@@ -60,6 +60,12 @@ Dyad includes support for Infinite Scroll and Featured Content in Jetpack.
 
 == Changelog ==
 
+= 22 April 2016 =
+* Remove check for is_paged. The featured content should display on all pages of posts if enabled, not just the first one.
+
+= 20 April 2016 =
+* Build out styles for Evenbrite template, so it is usable when used with theme.
+
 = 5 April 2016 =
 * Tweak z-index on posts to make menu accessible again.
 * Fix issue with site description in banner  no longer displaying when header text is off. It's not part of the header so it should still display.

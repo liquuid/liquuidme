@@ -55,19 +55,19 @@ function jetpack_og_tags() {
 	$description_length = 197;
 
 	if ( is_home() || is_front_page() ) {
-		$site_type              = get_option( 'open_graph_protocol_site_type' );
+		$site_type              = Jetpack_Options::get_option_and_ensure_autoload( 'open_graph_protocol_site_type', '' );
 		$tags['og:type']        = ! empty( $site_type ) ? $site_type : 'website';
 		$tags['og:title']       = get_bloginfo( 'name' );
 		$tags['og:description'] = get_bloginfo( 'description' );
 
 		$front_page_id = get_option( 'page_for_posts' );
-		if ( $front_page_id && is_home() )
+		if ( 'page' == get_option( 'show_on_front' ) && $front_page_id && is_home() )
 			$tags['og:url'] = get_permalink( $front_page_id );
 		else
 			$tags['og:url'] = home_url( '/' );
 
 		// Associate a blog's root path with one or more Facebook accounts
-		$facebook_admins = get_option( 'facebook_admins' );
+		$facebook_admins = Jetpack_Options::get_option_and_ensure_autoload( 'facebook_admins', array() );
 		if ( ! empty( $facebook_admins ) )
 			$tags['fb:admins'] = $facebook_admins;
 
@@ -170,10 +170,13 @@ function jetpack_og_tags() {
 		$tags['og:image'] = $image_info['src'];
 
 		if ( ! empty( $image_info['width'] ) ) {
-			$tags['og:image:width'] = $image_info['width'];
+			$tags['og:image:width'] = (int) $image_info['width'];
 		}
 		if ( ! empty( $image_info['height'] ) ) {
-			$tags['og:image:height'] = $image_info['height'];
+			$tags['og:image:height'] = (int) $image_info['height'];
+		}
+		if ( ! empty( $image_info['alt_text'] ) ) {
+			$tags['og:image:alt'] = esc_attr( $image_info['alt_text'] );
 		}
 	}
 
@@ -257,67 +260,57 @@ function jetpack_og_tags() {
 			}
 		}
 	}
+	$og_output .= "\n<!-- End Jetpack Open Graph Tags -->\n";
 	echo $og_output;
 }
 
-function jetpack_og_get_image( $width = 200, $height = 200, $max_images = 4 ) { // Facebook requires thumbnails to be a minimum of 200x200
-	$image = '';
+/**
+ * Returns an image used in social shares.
+ *
+ * @since 2.0.0
+ *
+ * @param int  $width Minimum width for the image. Default is 200 based on Facebook's requirement.
+ * @param int  $height Minimum height for the image. Default is 200 based on Facebook's requirement.
+ * @param null $deprecated Deprecated.
+ *
+ * @return array The source ('src'), 'width', and 'height' of the image.
+ */
+function jetpack_og_get_image( $width = 200, $height = 200, $deprecated = null ) {
+	if ( ! empty( $deprecated ) ) {
+		_deprecated_argument( __FUNCTION__, '6.6.0' );
+	}
+	$image = array();
 
 	if ( is_singular() && ! is_home() ) {
-		global $post;
-		$image = '';
-
-		// Grab obvious image if $post is an attachment page for an image
-		if ( is_attachment( $post->ID ) && 'image' == substr( $post->post_mime_type, 0, 5 ) ) {
-			$image = wp_get_attachment_url( $post->ID );
+		// Grab obvious image if post is an attachment page for an image
+		if ( is_attachment( get_the_ID() ) && 'image' === substr( get_post_mime_type(), 0, 5 ) ) {
+			$image['src'] = wp_get_attachment_url( get_the_ID() );
 		}
 
 		// Attempt to find something good for this post using our generalized PostImages code
-		if ( ! $image && class_exists( 'Jetpack_PostImages' ) ) {
-			$post_images = Jetpack_PostImages::get_images( $post->ID, array( 'width' => $width, 'height' => $height ) );
+		if ( empty( $image ) && class_exists( 'Jetpack_PostImages' ) ) {
+			$post_images = Jetpack_PostImages::get_images( get_the_ID(), array( 'width' => $width, 'height' => $height ) );
 			if ( $post_images && ! is_wp_error( $post_images ) ) {
-				$image = array();
 				foreach ( (array) $post_images as $post_image ) {
 					$image['src'] = $post_image['src'];
 					if ( isset( $post_image['src_width'], $post_image['src_height'] ) ) {
 						$image['width']  = $post_image['src_width'];
 						$image['height'] = $post_image['src_height'];
 					}
+					if ( ! empty( $post_image['alt_text'] ) ) {
+						$image['alt_text'] = $post_image['alt_text'];
+					}
 				}
 			}
 		}
-	} else if ( is_author() ) {
-		$author = get_queried_object();
-		if ( function_exists( 'get_avatar_url' ) ) {
-			// Prefer the core function get_avatar_url() if available, WP 4.2+
-			$image['src'] = get_avatar_url( $author->user_email, array( 'size' => $width ) );
-		}
-		else {
-			$has_filter = has_filter( 'pre_option_show_avatars', '__return_true' );
-			if ( ! $has_filter ) {
-				add_filter( 'pre_option_show_avatars', '__return_true' );
-			}
-			$avatar = get_avatar( $author->user_email, $width );
-			if ( ! $has_filter ) {
-				remove_filter( 'pre_option_show_avatars', '__return_true' );
-			}
-
-			if ( ! empty( $avatar ) && ! is_wp_error( $avatar ) ) {
-				if ( preg_match( '/src=["\']([^"\']+)["\']/', $avatar, $matches ) );
-					$image['src'] = wp_specialchars_decode( $matches[1], ENT_QUOTES );
-			}
-		}
+	} elseif ( is_author() ) {
+		$author       = get_queried_object();
+		$image['src'] = get_avatar_url( $author->user_email, array(
+			'size' => $width,
+		) );
 	}
 
-	if ( empty( $image ) ) {
-		$image = array();
-	} else if ( ! is_array( $image ) ) {
-		$image = array(
-			'src' => $image
-		);
-	}
-
-	// First fall back, blavatar
+	// First fall back, blavatar.
 	if ( empty( $image ) && function_exists( 'blavatar_domain' ) ) {
 		$blavatar_domain = blavatar_domain( site_url() );
 		if ( blavatar_exists( $blavatar_domain ) ) {
@@ -327,24 +320,35 @@ function jetpack_og_get_image( $width = 200, $height = 200, $max_images = 4 ) { 
 		}
 	}
 
-	// Second fall back, Site Logo
+	// Second fall back, Site Logo.
 	if ( empty( $image ) && ( function_exists( 'jetpack_has_site_logo' ) && jetpack_has_site_logo() ) ) {
-		$image['src']        = jetpack_get_site_logo( 'url' );
-		$image_dimensions    = jetpack_get_site_logo_dimensions();
-		if ( ! empty( $image_dimensions ) ) {
-			$image['width']  = $image_dimensions['width'];
-			$image['height'] = $image_dimensions['height'];
+		$image_id = jetpack_get_site_logo( 'id' );
+		$logo     = wp_get_attachment_image_src( $image_id, 'full' );
+		if (
+			isset( $logo[0], $logo[1], $logo[2] )
+			&& ( _jetpack_og_get_image_validate_size( $logo[1], $logo[2], $width, $height ) )
+		) {
+			$image['src']    = $logo[0];
+			$image['width']  = $logo[1];
+			$image['height'] = $logo[2];
 		}
 	}
 
-	// Third fall back, Core Site Icon. Added in WP 4.3.
-	if ( empty( $image ) && ( function_exists( 'has_site_icon') && has_site_icon() ) ) {
-		$image['src']     = get_site_icon_url( 512 );
-		$image['width']   = '512';
-		$image['height']  = '512';
+	// Third fall back, Core Site Icon, if valid in size. Added in WP 4.3.
+	if ( empty( $image ) && ( function_exists( 'has_site_icon' ) && has_site_icon() ) ) {
+		$image_id = get_option( 'site_icon' );
+		$icon     = wp_get_attachment_image_src( $image_id, 'full' );
+		if (
+			isset( $icon[0], $icon[1], $icon[2] )
+			&& ( _jetpack_og_get_image_validate_size( $icon[1], $icon[2], $width, $height ) )
+		) {
+			$image['src']    = $icon[0];
+			$image['width']  = $icon[1];
+			$image['height'] = $icon[2];
+		}
 	}
 
-	// Finally fall back, blank image
+	// Final fall back, blank image.
 	if ( empty( $image ) ) {
 		/**
 		 * Filter the default Open Graph Image tag, used when no Image can be found in a post.
@@ -359,37 +363,38 @@ function jetpack_og_get_image( $width = 200, $height = 200, $max_images = 4 ) { 
 	return $image;
 }
 
+
 /**
-* @param $email
-* @param $width
-* @return array|bool|mixed|string
-*/
-function jetpack_og_get_image_gravatar( $email, $width ) {
-	$image = '';
-	if ( function_exists( 'get_avatar_url' ) ) {
-		$avatar = get_avatar_url( $email, $width );
-		if ( ! empty( $avatar ) ) {
-			if ( is_array( $avatar ) )
-				$image = $avatar[0];
-			else
-				$image = $avatar;
-		}
-	} else {
-		$has_filter = has_filter( 'pre_option_show_avatars', '__return_true' );
-		if ( !$has_filter ) {
-			add_filter( 'pre_option_show_avatars', '__return_true' );
-		}
-		$avatar = get_avatar( $email, $width );
-
-		if ( !$has_filter ) {
-			remove_filter( 'pre_option_show_avatars', '__return_true' );
-		}
-
-		if ( !empty( $avatar ) && !is_wp_error( $avatar ) ) {
-			if ( preg_match( '/src=["\']([^"\']+)["\']/', $avatar, $matches ) )
-				$image = wp_specialchars_decode($matches[1], ENT_QUOTES);
-		}
+ * Validate the width and height against required width and height
+ *
+ * @param int $width      Width of the image.
+ * @param int $height     Height of the image.
+ * @param int $req_width  Required width to pass validation.
+ * @param int $req_height Required height to pass validation.
+ *
+ * @return bool - True if the image passed the required size validation
+ */
+function _jetpack_og_get_image_validate_size( $width, $height, $req_width, $req_height ) {
+	if ( ! $width || ! $height ) {
+		return false;
 	}
 
-	return $image;
+	$valid_width = ( $width >= $req_width );
+	$valid_height = ( $height >= $req_height );
+	$is_image_acceptable = $valid_width && $valid_height;
+
+	return $is_image_acceptable;
+}
+
+/**
+ * Gets a gravatar URL of the specified size.
+ *
+ * @param string $email E-mail address to get gravatar for.
+ * @param int    $width Size of returned gravatar.
+ * @return array|bool|mixed|string
+ */
+function jetpack_og_get_image_gravatar( $email, $width ) {
+	return get_avatar_url( $email, array(
+		'size' => $width,
+	) );
 }

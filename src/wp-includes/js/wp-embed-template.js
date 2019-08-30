@@ -1,3 +1,6 @@
+/**
+ * @output wp-includes/js/wp-embed-template.js
+ */
 (function ( window, document ) {
 	'use strict';
 
@@ -26,6 +29,7 @@
 			share_dialog_close = document.querySelector( '.wp-embed-share-dialog-close' ),
 			share_input = document.querySelectorAll( '.wp-embed-share-input' ),
 			share_dialog_tabs = document.querySelectorAll( '.wp-embed-share-tab-button button' ),
+			featured_image = document.querySelector( '.wp-embed-featured-image img' ),
 			i;
 
 		if ( share_input ) {
@@ -137,6 +141,13 @@
 		 * Send this document's height to the parent (embedding) site.
 		 */
 		sendEmbedMessage( 'height', Math.ceil( document.body.getBoundingClientRect().height ) );
+
+		// Send the document's height again after the featured image has been loaded.
+		if ( featured_image ) {
+			featured_image.addEventListener( 'load', function() {
+				sendEmbedMessage( 'height', Math.ceil( document.body.getBoundingClientRect().height ) );
+			} );
+		}
 
 		/**
 		 * Detect clicks to external (_top) links.

@@ -14,7 +14,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
-<link href='https://fonts.googleapis.com/css?family=Raleway:400,600,200' rel='stylesheet' type='text/css'>
 
 <?php wp_head(); ?>
 </head>
@@ -40,24 +39,13 @@
 
 		<nav id="site-navigation" class="main-navigation" role="navigation">
 			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Menu', 'dyad' ); ?></button>
-
-			<div id="search-menu">
-            <form role="search" method="get" class="search-form float-right" action="<?php echo site_url(); ?>/">
-					<label>
-						<span class="screen-reader-text">Pesquisar por:</span>
-						<input type="search" class="search-field" placeholder="Pesquisar &hellip;" value="" name="s" />
-					</label>
-					<input type="submit" class="search-submit" value="Pesquisar" />
-				</form>
-			</div>
 			<?php wp_nav_menu( array(
 				'theme_location' => 'primary',
 				'menu_id' => 'primary-menu',
 				'container' => 'div',
 				'container_class' => 'primary-menu',
-			)); ?>
+			) ); ?>
 		</nav>
-
 
 	</header><!-- #masthead -->
 

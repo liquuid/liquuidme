@@ -15,8 +15,8 @@
  *    Moxiecode Spell Checker plugin released under the LGPL with TinyMCE
  */
 
-/* jshint onevar: false, sub: true, devel: true */
-/* global tinymce, AtDCore, AtD_proofread_click_count */
+/* jshint onevar: false, sub: true, devel: true, loopfunc: true */
+/* global tinymce, AtDCore, AtD_proofread_click_count:true */
 
 (function()
 {

@@ -1,196 +1,264 @@
-=== CloudFlare ===
-Contributors: i3149, jchen329, jamescf, simon-says, dfritsch
-Tags: cloudflare, comments, spam, cdn, free, website, performance, speed
-Requires at least: 2.8
-Tested up to: 4.1
-Stable tag: 1.3.24
-License: GPLv2
+=== Cloudflare ===
+Contributors: jwineman, furkan811, icyapril, manatarms, zproser
+Tags: cloudflare, seo, ssl, ddos, speed, security, cdn, performance, free
+Requires at least: 3.4
+Tested up to: 4.9.1
+Stable tag: 3.3.3
+License: BSD-3-Clause
 
-The CloudFlare WordPress Plugin ensures your WordPress blog is running optimally on the CloudFlare platform.
+All of Cloudflare’s performance and security benefits in a simple one-click install of recommended settings specifically developed for WordPress.
 
 == Description ==
 
-CloudFlare has developed a plugin for WordPress. By using the CloudFlare WordPress Plugin, you receive: 
+= What this plugin can do for you =
 
-* Correct IP Address information for comments posted to your site
+**One-click WordPress-optimized settings**
 
-* Better protection as spammers from your WordPress blog get reported to CloudFlare
+The easiest way to setup Cloudflare for your WordPress site.
 
-THINGS YOU NEED TO KNOW:
+**Web application firewall (WAF) rulesets**
 
-* The main purpose of this plugin is to ensure you have no change to your originating IPs when using CloudFlare. Since CloudFlare acts a reverse proxy, connecting IPs now come from CloudFlare's range. This plugin will ensure you can continue to see the originating IP. 
+Available on all of Cloudflare’s paid plans, the WAF has built-in rulesets, including rules that mitigate WordPress specific threats and vulnerabilities. These security rules are always kept up-to-date, once the WAF is enabled, you can rest easy knowing your site is protected from even the latest threats.
 
-* Every time you click the 'spam' button on your blog, this threat information is sent to CloudFlare to ensure you are constantly getting the best site protection.
+**Automatic cache purge**
 
-* We recommend any WordPress and CloudFlare user use this plugin. For more best practices around using WordPress and CloudFlare, see: https://support.cloudflare.com/hc/en-us/articles/201717894-Using-CloudFlare-and-WordPress-Five-Easy-First-Steps
+Occurs when you change the appearance of your website. This means that you can focus on your website, while we ensure that the latest content is always available to your visitors.
+(Note: By default, Cloudflare does not cache HTML, and a cache purge is not required on updating HTML content such as publishing a new blog entry).
 
-MORE INFORMATION ON CLOUDFLARE:
+= Additional features =
 
-CloudFlare is a service that makes websites load faster and protects sites from online spammers and hackers. Any website with a root domain (ie www.mydomain.com) can use CloudFlare. On average, it takes less than 5 minutes to sign up. You can learn more here: [CloudFlare.com](https://www.cloudflare.com/overview.html).
+* Header rewrite to prevent a redirect loop when Cloudflare’s Universal SSL is enabled
+
+* Change Cloudflare settings from within the plugin itself without needing to navigate to the cloudflare.com dashboard. You can change settings for cache purge, security level, Always Online, and image optimization
+
+* View analytics such as total visitors, bandwidth saved, and threats blocked
+
+* Support for [HTTP2/Server Push](https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/)
 
 == Installation ==
 
-Upload the CloudFlare plugin to your blog, Activate it, and you're done!
+= Prerequisite =
+Make sure your PHP version is 5.3.10 or higher.
 
-You will also want to sign up your blog with CloudFlare.com
+= From your WordPress Dashboard =
 
-[Read more](http://blog.cloudflare.com/introducing-the-cloudflare-wordpress-plugin) on why we created this plugin.
+1. Visit “Plugins” → Add New
+2. Search for Cloudflare
+3. Activate Cloudflare from your Plugins page.
+
+= From WordPress.org =
+
+1. Download Cloudflare
+2. Upload the “cloudflare” directory to your “/wp-content/plugins/” directory, using ftp, sftp, scp etc.
+3. Activate Cloudflare from your Plugins page.
+
+= Once Activated =
+
+1. Go to cloudflare.com
+2. Login with your cloudflare account. (If you don’t have a Cloudflare account first sign up for Cloudflare)
+3. Press your account name on top right corner and select “My Settings”
+4. Scroll down to “API Key” → “Global API Key” → View API Key
+5. Copy the API key
+6. Return back to WordPress Cloudflare Plugin page
+7. Enter your email address and paste your API key
+8. Press Login.
+
+== Frequently Asked Questions ==
+
+= Do I need a Cloudflare account to use the plugin? =
+
+Yes, on install and activation the plugin, first time users will be asked to enter their email address (used to sign-up for an account at cloudflare.com) and their user API key. This is needed to support all the features offered by the plugin.
+
+= What settings are applied when I click "Apply Default Settings" in Cloudflare's WordPress plugin? =
+
+ You can review the recommended settings that are applied [here](https://support.cloudflare.com/hc/en-us/articles/227342487).
+
+= Does the plugin work if I have Varnish enabled? =
+
+Yes, Cloudflare works with, and helps speed up your site even more, if you have Varnish enabled.
+
+== Screenshots ==
+
+1. Cloudflare Plugin
 
 == Changelog ==
 
-= 1.3.23 =
+= 3.3.3 - 2019-3-6 =
 
-Fixed bug that was preventing spam comments from being sent to CloudFlare
+*Fixed*
 
-= 1.3.22 =
+* Bug in Hooks.php causing errors in PHP 7+
+* Bug preventing Autoptimize plugin's optimized asset urls from being used when present and when Cloudflare HTTP/2 Push was enabled
 
-* Fixing bug which prevented a user from activating/deactivating the plugin
+= 3.3.2 - 2017-12-12 =
 
-= 1.3.21 = 
+*Fixed*
 
-* Added input sanitization.
+* Bug in cf-ip-rewrite
 
-= 1.3.20 =
+*Added*
 
-* Updated the method to restore visitor IPs
-* Updated the URL rewrite to be compatible with WordPress 4.4
+* Added a new filter cloudflare_purge_by_url allowing users to have better control on automatically purged urls.
 
-= 1.3.18 =
+= 3.3.1 - 2017-6-29 =
 
-* Bug: Clean up headers debugging message that can be displayed in some cases
+*Fixed*
 
-= 1.3.17 =
+* Potential bug by using $_GET.
 
-* Limit http protocol rewriting to text/html Content-Type
+= 3.3.0 - 2017-6-29 =
 
-= 1.3.16 =
+*Added*
 
-* Update regex to not alter the canonical url
+* Added a new Splash Screen
+* Added userConfig.js file allowing custom configurations.
+* Added logs in debug mode for Automatic Cache Purge.
+* Added logs for oversized Server Push HTTP headers.
 
-= 1.3.15 =
+*Changed*
 
-* Plugin settings are now found under Settings -> CloudFlare
-* Plugin is now using the WordPress HTTP_API  - this will give better support to those in hosting environments without cURL or an up to date CA cert bundle
-* Fixes to squash some PHP Warnings. Relocated error logging to only happen in WP_DEBUG mode
-* Added Protocol Rewriting option to support Flexible SSL
+* Automatic Cache Purge now purges Autoptimize by everything rather than by URL.
+* Updated IP Ranges
 
-= 1.3.14 =
+*Fixed*
 
-* Improved logic to detect the customer domain, with added option for a manual override
-* Standardised error display
-* Updated CloudFlare IP Ranges
+* Bug where domains which had capital letters not working.
+* Bug where Automatic Cache Purge couldn't purge front page.
+* Bug related to work with IWP.
+* Bug where if PHP is compiled with ipv6-disable flag, it crashed the site.
 
-= 1.3.13 =
+= 3.2.1 - 2017-3-14 =
 
-* Clarified error messaging in the plugin further
-* Added cURL error detection to explain issues with server installed cert bundles
+*Fixed*
 
-= 1.3.12 =
+* Bug where accounts which had more than 20 zones would not show up correctly.
 
-* Removed use of php short-code in a couple of places
-* Added some cURL / json_decode error handling to output to the screen any failures
-* Reformatted error / notice display slightly
+= 3.2.0 - 2017-3-1 =
 
-= 1.3.11 =
+*Added*
 
-* Adjusted a line syntax to account for differing PHP configurations.
+* Bypass Cache By Cookie functionality.
+* HTTP/2 Server Push functionality (disabled by default).
 
-= 1.3.10 = 
+*Changed*
 
-* Added IP ranges.
+* Lowered the plugin size.
+* Automatic Cache Management feature includes purging taxonomies.
+* Automatic Cache Management feature supports sites which use both HTTP and HTTPS.
 
-= 1.3.9 =
-* Made adjustment to syntax surrounding cURL detection for PHP installations that do not have short_open_tag enabled.
+*Fixed*
 
-= 1.3.8 =
-* Fixed issue with invalid header.
-* Updated IP ranges
-* Fixed support link
+* Admin bar disappearing from the plugin.
+* Bug where spinner was loading forever.
+* Bug where the backend errors where not being shown in the frontend.
+* Issues where IE11 was not working properly.
 
-= 1.3.7 =
-* Remove Database Optimizer related text.
+= 3.1.1 - 2016-11-17 =
 
-= 1.3.6 =
-* Remove Database Optimizer.
+*Changed*
 
-= 1.3.5 =
-* Disable Development Mode option if cURL not installed.  Will Use JSONP in future release to allow domains without cURL to use Development Mode.
+* Moved Admin Bar behind Automatic Cache Purge toggle.
 
-= 1.3.4 =
-* Add in IPV6 support and Development Mode option to wordpress plugin settings page.  Remove cached IP range text file.
+= 3.1.0 - 2016-11-17 =
 
-= 1.3.3 =
-* Bump stable version number.
+*Added*
 
-= 1.3.2.Beta =  
-* BETA RELEASE: IPv6 support - Pull the IPv6 range from https://www.cloudflare.com/ips-v6.  Added Development Mode option to wordpress plugin settings page.
+* Added ability to automatically purge cache when a post is published, edited or deleted. (Thanks to brandomeniconi and mike503)
+* Added ability to work with WordPress MU Domain Mapping plugin. (Thanks to brandomeniconi)
 
-= 1.2.4 =  
-* Pull the IP range from https://www.cloudflare.com/ips-v4.  Modified to keep all files within cloudflare plugin directory.
+*Changed*
 
-= 1.2.3 =  
-* Updated with new IP range
+* Changed the UI to look more like cloudflare.com dashboard.
+* Changed plugin description.
+* Disabled showing WordPress Admin Bar and Edit Post Link to avoid caching problems for users using HTML Caching.
 
-= 1.2.2 =
-* Restricted database optimization to administrators
+*Fixed*
 
-= 1.2.1 =
-* Increased load priority to avoid conflicts with other plugins
+* Fixed bug where require vendor folders was not working.
+* Fixed bug where static files were cached which caused issues updating the plugin.
+* Fixed dependencies which caused issues with PHP Compatibility Checker plugin.
 
-= 1.2.0 =
+= 3.0.6 - 2016-10-6 =
 
-* WP 3.3 compatibility.
+*Added*
 
-= 1.1.9 =
+* Added ability to toggle Development Mode.
 
-* Includes latest CloudFlare IP allocation -- 108.162.192.0/18.
+*Fixed*
 
-= 1.1.8 =
+* Fixed bug where active zone dropdown was not working properly.
 
-* WP 3.2 compatibility.
+*Changed*
 
-= 1.1.7 =
+* Compressed resources to lower plugin size.
+* Updated Cloudflare logo.
 
-* Implements several security updates.
+= 3.0.5 - 2016-09-28 =
 
-= 1.1.6 =
+*Fixed*
 
-* Includes latest CloudFlare IP allocation -- 141.101.64.0/18.
+* Fixed bug where refactored Flexible SSL fix was causing the settings page hook not to load.
 
-= 1.1.5 =
+= 3.0.4 - 2016-09-27 =
 
-* Includes latest CloudFlare IP allocation -- 103.22.200.0/22.
+*Added*
 
-= 1.1.4 =
+* Ability for users to toggle Automatic HTTPS Rewrites (enabled by default, solves for most mixed content errors).
 
-* Updated messaging.
+*Fixed*
 
-= 1.1.3 =
+* Fixed an issue where low PHP version where getting syntax error.
+* Fixed issue where some users using Flexible SSL where not able to login to wp-admin .
+* Fixed a bug where the active zone selector was not paginating through the whole zone list.
+* Fixed an issue where the setting for Image Optimization was being displayed incorrectly.
+* Fixed a bug in Analytics where the  Uniques Visitors data was not displaying accurately.
 
-* Better permission checking for DB optimizer.
-* Added CloudFlare's latest /20 to the list of CloudFlare IP ranges.
+*Changed*
 
-= 1.1.2 =
+* Compressed assets to lower plugin size.
+* Hooks loading logic refactored to make it more simple and readable.
 
-* Fixed several broken help links.
-* Fixed confusing error message.
+= 3.0.3 - 2016-09-21 =
 
-= 1.1.1 =
+*Fixed*
 
-* Fix for Admin menus which are breaking when page variable contains '-'.
+* Fixed an issue where some domains were being incorrectly propagated to the domain selector dropdown
+* Fixed an issue where the Web Application Firewall was accidentally triggering RFI Attack Rules
+* Fixed an issue where image optimization was not being enabled for Pro and higher Cloudflare plans
 
-= 1.1.0 =
+= 3.0.2 - 2016-09-16 =
 
-* Added a box to input CloudFlare API credentials.
-* Added a call to CloudFlare's report spam API when a comment is marked as spam.
+*Fixed*
 
-= 1.0.1 =
+* Disabled HTTP/2 Server Push which was leading to 520 and 502 errors for some websites.
 
-* Fix to check that it is OK to add a header before adding one.
+= 3.0.1 - 2016-09-16 =
 
-= 1.0.0 =
+*Fixed*
 
-* Initial feature set
-* Set RemoteIP header correctly.
-* On comment spam, send the offending IP to CloudFlare.
-* Clean up DB on load.
+* Fixed HTTP/2 Server Push exceeding the header limit Cloudflare has which caused 520 errors.
+* Fixed warning message in HTTP/2 Server Push.
+
+= 3.0.0 - 2016-09-15 =
+
+*Added*
+
+* Added one-click application oft WordPress specific recommended settings
+* Added ability to purge the Cloudflare cache
+* Integrated with WordPress cache management to automatically clear the Cloudflare cache on updating site appearance
+* Added ability to change Cloudflare settings (Always Online mode, I’m Under Attack, Image Optimization, Security Level, Web Application Firewall)
+* Added Analytics showing Cached Requests, bandwidth used, unique visitors, threats blocked
+* Added Header rewrite to prevent a redirect loop when Cloudflare’s Universal SSL is enabled
+* Added HTTP/2 Server Push support
+* Added Support for PHP 5.3+
+
+*Removed*
+
+* Removed HTTPS Protocol Rewriting
+* Removed submission of spam comments
+* Removed ability to toggle Development Mode On/Off
+
+*Changed*
+
+* Updated user interface
+* Started to support WordPress 3.4+ instead of 2.8+ because we depend on the  [WordPress Options API](https://codex.wordpress.org/Options_API)

@@ -260,7 +260,7 @@ pre:before {
 
 /* entry header */
 
-.has-post-thumbnail.is-singular:not(.home):not(.single-format-image) .entry-header {
+.has-post-thumbnail.is-singular:not(.home):not(.single-format-image):not(.page-template-eventbrite-index) .entry-header {
 	left: auto;
 	right: 0;
 	text-align: right;

@@ -14,8 +14,8 @@
  * Contact      : willis.rh@gmail.com
  */
 
-/* jshint onevar: false, sub: true, smarttabs: true */
-/* global AtDCore, AtD_proofread_click_count, CSSHttpRequest, ActiveXObject */
+/* jshint onevar: false, sub: true, smarttabs: true, loopfunc: true */
+/* global AtDCore, AtD_proofread_click_count:true, CSSHttpRequest, ActiveXObject */
 
 var AtD =
 {

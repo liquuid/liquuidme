@@ -1,6 +1,8 @@
 <?php
 /**
- * @package WPSEO\admin|ajax
+ * WPSEO plugin file.
+ *
+ * @package WPSEO\Admin\Ajax
  */
 
 /**
@@ -9,8 +11,25 @@
  */
 class Yoast_Dismissable_Notice_Ajax {
 
+	/**
+	 * Notice type toggle value for user notices.
+	 *
+	 * @var string
+	 */
 	const FOR_USER = 'user_meta';
+
+	/**
+	 * Notice type toggle value for network notices.
+	 *
+	 * @var string
+	 */
 	const FOR_NETWORK = 'site_option';
+
+	/**
+	 * Notice type toggle value for site notices.
+	 *
+	 * @var string
+	 */
 	const FOR_SITE = 'option';
 
 

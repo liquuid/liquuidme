@@ -1,5 +1,9 @@
+/**
+ * @output wp-admin/js/edit-comments.js
+ */
+
 /* global adminCommentsL10n, thousandsSeparator, list_args, QTags, ajaxurl, wpAjax */
-var setCommentsList, theList, theExtraList, commentReply;
+/* global commentReply, theExtraList, theList, setCommentsList */
 
 (function($) {
 var getCount, updateCount, updateCountText, updatePending, updateApproved,
@@ -184,7 +188,7 @@ var getCount, updateCount, updateCountText, updatePending, updateApproved,
 		});
 	};
 
-setCommentsList = function() {
+window.setCommentsList = function() {
 	var totalInput, perPageInput, pageInput, dimAfter, delBefore, updateTotalCount, delAfter, refillTheExtraList, diff,
 		lastConfidentTime = 0;
 
@@ -220,12 +224,15 @@ setCommentsList = function() {
 			if ( settings.data.id == replyID )
 				replyButton.text(adminCommentsL10n.replyApprove);
 
-			c.find('div.comment_status').html('0');
+			c.find( '.row-actions span.view' ).addClass( 'hidden' ).end()
+				.find( 'div.comment_status' ).html( '0' );
+
 		} else {
 			if ( settings.data.id == replyID )
 				replyButton.text(adminCommentsL10n.reply);
 
-			c.find('div.comment_status').html('1');
+			c.find( '.row-actions span.view' ).removeClass( 'hidden' ).end()
+				.find( 'div.comment_status' ).html( '1' );
 		}
 
 		diff = $('#' + settings.element).is('.' + settings.dimClass) ? 1 : -1;
@@ -458,6 +465,13 @@ setCommentsList = function() {
 			updateCountText( 'span.trash-count', trashDiff );
 		}
 
+		if (
+			( ( 'trash' === settings.data.comment_status ) && !getCount( $( 'span.trash-count' ) ) ) ||
+			( ( 'spam' === settings.data.comment_status ) && !getCount( $( 'span.spam-count' ) ) )
+		) {
+			$( '#delete_all' ).hide();
+		}
+
 		if ( ! isDashboard ) {
 			total = totalInput.val() ? parseInt( totalInput.val(), 10 ) : 0;
 			if ( $(settings.target).parent().is('span.undo') )
@@ -550,8 +564,8 @@ setCommentsList = function() {
 		});
 	};
 
-	theExtraList = $('#the-extra-comment-list').wpList( { alt: '', delColor: 'none', addColor: 'none' } );
-	theList = $('#the-comment-list').wpList( { alt: '', delBefore: delBefore, dimAfter: dimAfter, delAfter: delAfter, addColor: 'none' } )
+	window.theExtraList = $('#the-extra-comment-list').wpList( { alt: '', delColor: 'none', addColor: 'none' } );
+	window.theList = $('#the-comment-list').wpList( { alt: '', delBefore: delBefore, dimAfter: dimAfter, delAfter: delAfter, addColor: 'none' } )
 		.bind('wpListDelEnd', function(e, s){
 			var wpListsData = $(s.target).attr('data-wp-lists'), id = s.element.replace(/[^0-9]+/g, '');
 
@@ -560,9 +574,10 @@ setCommentsList = function() {
 		});
 };
 
-commentReply = {
+window.commentReply = {
 	cid : '',
 	act : '',
+	originalContent : '',
 
 	init : function() {
 		var row = $('#replyrow');
@@ -621,15 +636,37 @@ commentReply = {
 	},
 
 	close : function() {
-		var c, replyrow = $('#replyrow');
+		var commentRow = $(),
+			replyRow = $( '#replyrow' );
 
 		// replyrow is not showing?
-		if ( replyrow.parent().is('#com-reply') )
+		if ( replyRow.parent().is( '#com-reply' ) ) {
 			return;
+		}
 
-		if ( this.cid && this.act == 'edit-comment' ) {
-			c = $('#comment-' + this.cid);
-			c.fadeIn(300, function(){ c.show(); }).css('backgroundColor', '');
+		if ( this.cid ) {
+			commentRow = $( '#comment-' + this.cid );
+		}
+
+		/*
+		 * When closing the Quick Edit form, show the comment row and move focus
+		 * back to the Quick Edit button.
+		 */
+		if ( 'edit-comment' === this.act ) {
+			commentRow.fadeIn( 300, function() {
+				commentRow
+					.show()
+					.find( '.vim-q' )
+						.attr( 'aria-expanded', 'false' )
+						.focus();
+			} ).css( 'backgroundColor', '' );
+		}
+
+		// When closing the Reply form, move focus back to the Reply button.
+		if ( 'replyto-comment' === this.act ) {
+			commentRow.find( '.vim-r' )
+				.attr( 'aria-expanded', 'false' )
+				.focus();
 		}
 
 		// reset the Quicktags buttons
@@ -638,14 +675,17 @@ commentReply = {
 
 		$('#add-new-comment').css('display', '');
 
-		replyrow.hide();
-		$('#com-reply').append( replyrow );
+		replyRow.hide();
+		$( '#com-reply' ).append( replyRow );
 		$('#replycontent').css('height', '').val('');
 		$('#edithead input').val('');
-		$('.error', replyrow).empty().hide();
-		$( '.spinner', replyrow ).removeClass( 'is-active' );
+		$( '.notice-error', replyRow )
+			.addClass( 'hidden' )
+			.find( '.error' ).empty();
+		$( '.spinner', replyRow ).removeClass( 'is-active' );
 
 		this.cid = '';
+		this.originalContent = '';
 	},
 
 	open : function(comment_id, post_id, action) {
@@ -655,6 +695,10 @@ commentReply = {
 			h = c.height(),
 			colspanVal = 0;
 
+		if ( ! this.discardCommentChanges() ) {
+			return false;
+		}
+
 		t.close();
 		t.cid = comment_id;
 
@@ -663,6 +707,7 @@ commentReply = {
 		action = action || 'replyto';
 		act = 'edit' == action ? 'edit' : 'replyto';
 		act = t.act = act + '-comment';
+		t.originalContent = $('textarea.comment', rowData).val();
 		colspanVal = $( '> th:visible, > td:visible', c ).length;
 
 		// Make sure it's actually a table and there's a `colspan` value to apply.
@@ -737,9 +782,10 @@ commentReply = {
 	},
 
 	send : function() {
-		var post = {};
+		var post = {},
+			$errorNotice = $( '#replysubmit .error-notice' );
 
-		$('#replysubmit .error').hide();
+		$errorNotice.addClass( 'hidden' );
 		$( '#replysubmit .spinner' ).addClass( 'is-active' );
 
 		$('#replyrow input').not(':button').each(function() {
@@ -830,16 +876,19 @@ commentReply = {
 	},
 
 	error : function(r) {
-		var er = r.statusText;
+		var er = r.statusText,
+			$errorNotice = $( '#replysubmit .notice-error' ),
+			$error = $errorNotice.find( '.error' );
 
 		$( '#replysubmit .spinner' ).removeClass( 'is-active' );
 
 		if ( r.responseText )
 			er = r.responseText.replace( /<.[^<>]*?>/g, '' );
 
-		if ( er )
-			$('#replysubmit .error').html(er).show();
-
+		if ( er ) {
+			$errorNotice.removeClass( 'hidden' );
+			$error.html( er );
+		}
 	},
 
 	addcomment: function(post_id) {
@@ -850,6 +899,22 @@ commentReply = {
 			$('table.comments-box').css('display', '');
 			$('#no-comments').remove();
 		});
+	},
+
+	/**
+	 * Alert the user if they have unsaved changes on a comment that will be
+	 * lost if they proceed.
+	 *
+	 * @returns {boolean}
+	 */
+	discardCommentChanges: function() {
+		var editRow = $( '#replyrow' );
+
+		if  ( this.originalContent === $( '#replycontent', editRow ).val() ) {
+			return true;
+		}
+
+		return window.confirm( adminCommentsL10n.warnCommentChanges );
 	}
 };
 
@@ -921,8 +986,7 @@ $(document).ready(function(){
 	}
 
 	// Quick Edit and Reply have an inline comment editor.
-	$( '#the-comment-list' ).on( 'click', '.comment-inline', function (e) {
-		e.preventDefault();
+	$( '#the-comment-list' ).on( 'click', '.comment-inline', function() {
 		var $el = $( this ),
 			action = 'replyto';
 
@@ -930,6 +994,7 @@ $(document).ready(function(){
 			action = $el.data( 'action' );
 		}
 
+		$( this ).attr( 'aria-expanded', 'true' );
 		commentReply.open( $el.data( 'commentId' ), $el.data( 'postId' ), action );
 	} );
 });

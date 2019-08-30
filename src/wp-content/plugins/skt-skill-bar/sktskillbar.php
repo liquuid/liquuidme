@@ -2,13 +2,13 @@
 /**
 * Plugin Name: SKT Skill Bar
 * Description: Skill Bar plugin to show skill bar or progress bar or circular bar or half circular bars using fancy animated jquery.
-* Plugin URI:  http://www.sktthemes.net
+* Plugin URI:  https://www.sktthemes.net
 * Author:      SKT Themes
-* Author URI:  http://www.sktthemes.net
-* Version:     1.4
+* Author URI:  https://www.sktthemes.net
+* Version:     1.5
 */
 
-define('SB_VER','1.4');
+define('SB_VER','1.5');
 
 add_action('wp_print_scripts', 'sbar_register_scripts');
 add_action('wp_print_styles', 'sbar_register_styles');

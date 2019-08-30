@@ -7,7 +7,7 @@ VAGRANT_PATH="/var/www/wordpress"
 echo "---> Installing apt packages"
 apt-get -y update && \
 apt-get -y upgrade && \
-DEBIAN_FRONTEND=noninteractive apt-get -y install unzip npm nodejs mysql-client mysql-server python-mysqldb php5 php5-cli php5-curl php5-gd php5-imagick php5-mysql php5-xmlrpc apache2 libapache2-mod-php5 && \
+DEBIAN_FRONTEND=noninteractive apt-get -y install unzip npm nodejs mysql-client mysql-server python-mysqldb php7.2 php7.2-cli php7.2-curl php7.2-gd php7.2-imagick php7.2-mysql php7.2-xmlrpc apache2 libapache2-mod-php7.2 && \
 
 echo "---> Enable mod rewrite"
 a2enmod rewrite && \

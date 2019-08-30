@@ -1,5 +1,7 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\XML_Sitemaps
  */
 
@@ -8,30 +10,12 @@
  */
 class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 
-	/** @var array $options All of plugin options. */
-	protected static $options;
-
-	/** @var WPSEO_Sitemap_Image_Parser $image_parser Holds image parser instance. */
-	protected static $image_parser;
-
 	/**
-	 * Set up object properties for data reuse.
-	 */
-	public function __construct() {
-	}
-
-	/**
-	 * Get Options
+	 * Holds image parser instance.
 	 *
-	 * @return array
+	 * @var WPSEO_Sitemap_Image_Parser
 	 */
-	protected function get_options() {
-		if ( ! isset( self::$options ) ) {
-			self::$options = WPSEO_Options::get_all();
-		}
-
-		return self::$options;
-	}
+	protected static $image_parser;
 
 	/**
 	 * Check if provider supports given item type.
@@ -42,7 +26,13 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 	 */
 	public function handles_type( $type ) {
 
-		return taxonomy_exists( $type );
+		$taxonomy = get_taxonomy( $type );
+
+		if ( $taxonomy === false || ! $this->is_valid_taxonomy( $taxonomy->name ) || ! $taxonomy->public ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -51,8 +41,6 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 	 * @return array
 	 */
 	public function get_index_links( $max_entries ) {
-
-		global $wpdb;
 
 		$taxonomies = get_taxonomies( array( 'public' => true ), 'objects' );
 
@@ -70,19 +58,22 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 		 * @param boolean $exclude        Defaults to true.
 		 * @param array   $taxonomy_names Array of names for the taxonomies being processed.
 		 */
-		$hide_empty         = ( apply_filters( 'wpseo_sitemap_exclude_empty_terms', true, $taxonomy_names ) ) ? 'count != 0 AND' : '';
-		$sql                = "
-			SELECT taxonomy, term_id
-			FROM $wpdb->term_taxonomy
-			WHERE $hide_empty taxonomy IN ('" . implode( "','", $taxonomy_names ) . "');
-		";
-		$all_taxonomy_terms = $wpdb->get_results( $sql );
-		$all_taxonomies     = array();
+		$hide_empty = apply_filters( 'wpseo_sitemap_exclude_empty_terms', true, $taxonomy_names );
 
-		foreach ( $all_taxonomy_terms as $obj ) {
-			$all_taxonomies[ $obj->taxonomy ][] = $obj->term_id;
+		$all_taxonomies = array();
+
+		$term_args = array(
+			'hide_empty' => $hide_empty,
+			'fields'     => 'ids',
+		);
+
+		foreach ( $taxonomy_names as $taxonomy_name ) {
+			$taxonomy_terms = get_terms( $taxonomy_name, $term_args );
+
+			if ( count( $taxonomy_terms ) > 0 ) {
+				$all_taxonomies[ $taxonomy_name ] = $taxonomy_terms;
+			}
 		}
-		unset( $hide_empty, $sql, $all_taxonomy_terms, $obj );
 
 		$index = array();
 
@@ -92,52 +83,52 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 				continue;
 			}
 
-			$steps = $max_entries;
-			$count = ( isset( $all_taxonomies[ $tax_name ] ) ) ? count( $all_taxonomies[ $tax_name ] ) : 1;
-			$n     = ( $count > $max_entries ) ? (int) ceil( $count / $max_entries ) : 1;
+			$total_count = ( isset( $all_taxonomies[ $tax_name ] ) ) ? count( $all_taxonomies[ $tax_name ] ) : 1;
+			$max_pages   = 1;
 
-			for ( $i = 0; $i < $n; $i++ ) {
+			if ( $total_count > $max_entries ) {
+				$max_pages = (int) ceil( $total_count / $max_entries );
+			}
 
-				$count = ( $n > 1 ) ? ( $i + 1 ) : '';
+			$last_modified_gmt = WPSEO_Sitemaps::get_last_modified_gmt( $tax->object_type );
 
-				if ( ! is_array( $tax->object_type ) || count( $tax->object_type ) == 0 ) {
+			for ( $page_counter = 0; $page_counter < $max_pages; $page_counter++ ) {
+
+				$current_page = ( $max_pages > 1 ) ? ( $page_counter + 1 ) : '';
+
+				if ( ! is_array( $tax->object_type ) || count( $tax->object_type ) === 0 ) {
 					continue;
 				}
 
-				if ( ( empty( $count ) || $count == $n ) ) {
-					$date = WPSEO_Sitemaps::get_last_modified_gmt( $tax->object_type );
+				$terms = array_splice( $all_taxonomies[ $tax_name ], 0, $max_entries );
+
+				if ( ! $terms ) {
+					continue;
+				}
+
+				$args  = array(
+					'post_type'      => $tax->object_type,
+					'tax_query'      => array(
+						array(
+							'taxonomy' => $tax_name,
+							'terms'    => $terms,
+						),
+					),
+					'orderby'        => 'modified',
+					'order'          => 'DESC',
+					'posts_per_page' => 1,
+				);
+				$query = new WP_Query( $args );
+
+				if ( $query->have_posts() ) {
+					$date = $query->posts[0]->post_modified_gmt;
 				}
 				else {
-					$terms = array_splice( $all_taxonomies[ $tax_name ], 0, $steps );
-
-					if ( ! $terms ) {
-						continue;
-					}
-
-					$args  = array(
-						'post_type' => $tax->object_type,
-						'tax_query' => array(
-							array(
-								'taxonomy' => $tax_name,
-								'terms'    => $terms,
-							),
-						),
-						'orderby'   => 'modified',
-						'order'     => 'DESC',
-					);
-					$query = new WP_Query( $args );
-
-					if ( $query->have_posts() ) {
-						$date = $query->posts[0]->post_modified_gmt;
-					}
-					else {
-						$date = WPSEO_Sitemaps::get_last_modified_gmt( $tax->object_type );
-					}
-					unset( $terms, $args, $query );
+					$date = $last_modified_gmt;
 				}
 
 				$index[] = array(
-					'loc'     => WPSEO_Sitemaps_Router::get_base_url( $tax_name . '-sitemap' . $count . '.xml' ),
+					'loc'     => WPSEO_Sitemaps_Router::get_base_url( $tax_name . '-sitemap' . $current_page . '.xml' ),
 					'lastmod' => $date,
 				);
 			}
@@ -156,23 +147,20 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 	 * @return array
 	 */
 	public function get_sitemap_links( $type, $max_entries, $current_page ) {
-
 		global $wpdb;
 
-		$links    = array();
-		$taxonomy = get_taxonomy( $type );
-
-		if ( $taxonomy === false || ! $this->is_valid_taxonomy( $taxonomy->name ) || ! $taxonomy->public ) {
+		$links = array();
+		if ( ! $this->handles_type( $type ) ) {
 			return $links;
 		}
 
-		$options = $this->get_options();
+		$taxonomy = get_taxonomy( $type );
 
 		$steps  = $max_entries;
 		$offset = ( $current_page > 1 ) ? ( ( $current_page - 1 ) * $max_entries ) : 0;
 
 		/** This filter is documented in inc/sitemaps/class-taxonomy-sitemap-provider.php */
-		$hide_empty = apply_filters( 'wpseo_sitemap_exclude_empty_terms', true, $taxonomy );
+		$hide_empty = apply_filters( 'wpseo_sitemap_exclude_empty_terms', true, array( $taxonomy->name ) );
 		$terms      = get_terms( $taxonomy->name, array( 'hide_empty' => $hide_empty ) );
 		$terms      = array_splice( $terms, $offset, $steps );
 
@@ -198,27 +186,16 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 
 			$url = array();
 
-			$tax_noindex     = WPSEO_Taxonomy_Meta::get_term_meta( $term, $term->taxonomy, 'noindex' );
-			$tax_sitemap_inc = WPSEO_Taxonomy_Meta::get_term_meta( $term, $term->taxonomy, 'sitemap_include' );
+			$tax_noindex = WPSEO_Taxonomy_Meta::get_term_meta( $term, $term->taxonomy, 'noindex' );
 
-			if ( $tax_noindex === 'noindex' && $tax_sitemap_inc !== 'always' ) {
-				continue;
-			}
-
-			if ( $tax_sitemap_inc === 'never' ) {
+			if ( $tax_noindex === 'noindex' ) {
 				continue;
 			}
 
 			$url['loc'] = WPSEO_Taxonomy_Meta::get_term_meta( $term, $term->taxonomy, 'canonical' );
 
 			if ( ! is_string( $url['loc'] ) || $url['loc'] === '' ) {
-
 				$url['loc'] = get_term_link( $term, $term->taxonomy );
-
-				if ( $options['trailingslash'] === true ) {
-
-					$url['loc'] = trailingslashit( $url['loc'] );
-				}
 			}
 
 			$url['mod']    = $wpdb->get_var( $wpdb->prepare( $sql, $term->taxonomy, $term->term_id ) );
@@ -248,16 +225,15 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 	 */
 	public function is_valid_taxonomy( $taxonomy_name ) {
 
-		$options = $this->get_options();
-		if ( ! empty( $options[ "taxonomies-{$taxonomy_name}-not_in_sitemap" ] ) ) {
+		if ( WPSEO_Options::get( "noindex-tax-{$taxonomy_name}" ) === true ) {
 			return false;
 		}
 
-		if ( in_array( $taxonomy_name, array( 'link_category', 'nav_menu' ) ) ) {
+		if ( in_array( $taxonomy_name, array( 'link_category', 'nav_menu' ), true ) ) {
 			return false;
 		}
 
-		if ( 'post_format' === $taxonomy_name && ! empty( $this->options['disable-post_format'] ) ) {
+		if ( 'post_format' === $taxonomy_name && WPSEO_Options::get( 'disable-post_format', false ) ) {
 			return false;
 		}
 
@@ -285,5 +261,17 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 		}
 
 		return self::$image_parser;
+	}
+
+	/* ********************* DEPRECATED METHODS ********************* */
+
+	/**
+	 * Get all the options
+	 *
+	 * @deprecated 7.0
+	 * @codeCoverageIgnore
+	 */
+	protected function get_options() {
+		_deprecated_function( __METHOD__, 'WPSEO 7.0', 'WPSEO_Options::get' );
 	}
 }

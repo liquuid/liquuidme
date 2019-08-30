@@ -2,8 +2,8 @@
 Contributors: (sonalsinha21)
 Tags: skill bars, circular skill bar, half circle skill bar
 Requires at least: 3.9
-Tested up to: 4.4.2
-Stable tag: 1.4
+Tested up to: 4.9.1
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,10 @@ Easy to use plugin. Just install it and check under settings for SKT Skill Bar. 
 3. This is how full circular skill bar will appear.
 
 == Changelog ==
+=1.5=
+
+Found plugin working with version 4.9.1
+
 =1.4=
 
 Updated plugin to work with latest version of WordPress and mobile devices

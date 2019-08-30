@@ -1,4 +1,8 @@
 == Changelog ==
+=1.5=
+
+Found plugin working with version 4.9.1
+
 =1.4=
 
 Updated plugin to work with latest version of WordPress and mobile devices
