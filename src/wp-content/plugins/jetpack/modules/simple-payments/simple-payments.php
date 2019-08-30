@@ -64,7 +64,15 @@ class Jetpack_Simple_Payments {
 		if ( $this->is_enabled_jetpack_simple_payments() ) {
 			jetpack_register_block( 'jetpack/simple-payments' );
 		} else {
-			Jetpack_Gutenberg::set_extension_unavailable( 'jetpack/simple-payments', 'missing_plan' );
+			$required_plan = ( defined( 'IS_WPCOM' ) && IS_WPCOM ) ? 'value_bundle' : 'jetpack_premium';
+			Jetpack_Gutenberg::set_extension_unavailable(
+				'jetpack/simple-payments',
+				'missing_plan',
+				array(
+					'required_feature' => 'simple-payments',
+					'required_plan' => ( defined( 'JETPACK_SHOW_BLOCK_UPGRADE_NUDGE' ) && JETPACK_SHOW_BLOCK_UPGRADE_NUDGE ) ? $required_plan : false
+				)
+			);
 		}
 	}
 
@@ -108,7 +116,7 @@ class Jetpack_Simple_Payments {
 		}
 
 		// For all Jetpack sites
-		return Jetpack::is_active() && Jetpack::active_plan_supports( 'simple-payments');
+		return Jetpack::is_active() && Jetpack_Plan::supports( 'simple-payments');
 	}
 
 	function parse_shortcode( $attrs, $content = false ) {
@@ -247,9 +255,9 @@ class Jetpack_Simple_Payments {
 			$image,
 			esc_attr( "${css_prefix}-details" ),
 			esc_attr( "${css_prefix}-title" ),
-			$data['title'],
+			esc_html( $data['title'] ),
 			esc_attr( "${css_prefix}-description" ),
-			$data['description'],
+			wp_kses( $data['description'], wp_kses_allowed_html( 'post' ) ),
 			esc_attr( "${css_prefix}-price" ),
 			esc_html( $data['price'] ),
 			esc_attr( "${css_prefix}-purchase-message" ),

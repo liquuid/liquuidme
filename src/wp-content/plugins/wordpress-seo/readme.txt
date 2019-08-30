@@ -3,10 +3,10 @@ Contributors: yoast, joostdevalk, tacoverdo, omarreiss, atimmer, jipmoors
 Donate link: https://yoa.st/1up
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
-Tags: SEO, XML sitemap, Google Search Console, Content analysis, Readability
-Requires at least: 5.0
-Tested up to: 5.1
-Stable tag: 10.0.1
+Tags: SEO, XML sitemap, Content analysis, Readability
+Requires at least: 4.9
+Tested up to: 5.2.2
+Stable tag: 11.9
 Requires PHP: 5.2.4
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the Yoast SEO plugin.
@@ -42,11 +42,10 @@ Yoast SEO does everything in its power to please both visitors and search engine
 
 * Yoast SEO tunes the engine of your site so you can work on creating great content.
 * Our cornerstone content and internal linking features help you optimize your site structure in a breeze.
-* Integrates with Google Search Console: See how your site performs in the search engines and fix crawl errors.
 * Manage SEO roles: Give your colleagues access to specific sections of the Yoast SEO plugin.
 * Bulk editor: Make large-scale edits to your site.
 * **[Premium]** Social previews to manage the way your page is shared on social networks like Facebook and Twitter.
-* **[Premium]** Redirect manager: It keeps your site healthy by easily redirecting errors from Google Search Console, deleted pages and changed URLs.
+* **[Premium]** Redirect manager: It keeps your site healthy by easily redirecting deleted pages and changed URLs.
 
 ### Premium support
 
@@ -106,51 +105,37 @@ You'll find answers to many of your questions on [kb.yoast.com](https://yoa.st/1
 
 == Changelog ==
 
-= 10.0.1 =
-Release Date: March 19th, 2019
+= 11.9.0 =
+Release Date: August 20th, 2019
 
-Bugfixes:
-
-* Fixes a bug where network-wide settings were not saved on multisite environments.
-
-= 10.0.0 =
-Release Date: March 12th, 2019
+Are you ready for another exciting release to round up the Yoast SEO 11 cycle? Because we are! In Yoast SEO 11.9 we have improvements for security and accessibility. Read more about Yoast SEO 11.9 in [our 11.9 release post](https://yoa.st/release-11-9)!
 
 Enhancements:
 
-* The recalibrated analysis is out of its beta phase and is now the default for the SEO analysis. Thanks for testing and giving us your valuable feedback! You are awesome! 👍
-* Adds `$taxonomy` to the arguments passed to the `wpseo_terms` filter. Props to [polevaultweb](https://github.com/polevaultweb).
-* Changes the screen reader text of the SEO score indicator in the menu bar and the traffic light in the snippet preview from `Bad SEO score.` to `Needs improvement.`
-* Props to [Kingdutch](https://github.com/Kingdutch) for helping improve our open source content analysis library.
+* Improves security by adding output escaping.
 
 Bugfixes:
 
-* Fixes a bug where the `focus keyphrase` snippet variable was not correctly applied on term pages.
-* Fixes a bug where the Facebook image that was set for the WooCommerce Shop page would not be outputted as `og:image`. Props [stodorovic](https://github.com/stodorovic).
-* Fixes a bug where the featured image set on a WooCommerce Shop page would not be outputted as Facebook OpenGraph Image or Twitter Image. Props [stodorovic](https://github.com/stodorovic).
-* Fixes a bug where backslashes and consecutive double quotes would be removed from the focus keyphrase when saving a post or term.
-* Fixes a bug where backslashes would be removed from the breadcrumb title, focus keyphrase, title or meta description when saving a term.
+* Fixes a bug where the image from the configuration wizard notification was missing an empty alt attribute.
+* Fixes a bug where some translations would be missing in the metabox, sidebar, configuration wizard and the help center.
 
-= 9.7.0 =
-Release Date: February 26th, 2019
+= 11.8.0 =
+Release Date: August 6th, 2019
+
+Release history tells us that the releases in the months of July and August are usually very quiet and not 'that notable'. Due to vacations from team members, the focus is usually on fixing bugs and cleaning up. Not for Yoast SEO 11.8! This new release gives us an enhanced metabox, bug fixes and the help of contributors from outside the company! Find out all about Yoast SEO 11.8 in [our 11.8 release post](https://yoa.st/release-11-8)!
 
 Enhancements:
 
-* Replaces inch marks by smart quotes in search breadcrumbs.
-* Improves the feedback for the assessment that checks the length of cornerstone articles.
-* Improves accessibility and focus management for the How-To and FAQ structured data blocks.
-* Improves the Internal Links table headers on the post overview for better translations and accessibility.
-* Adds a description of the SEO and Readability score to the posts and taxonomies overview in mobile view.
-* Adds a label element to the Google Search Console authorisation code input field in the configuration wizard.
+* Moves advanced SEO settings to a collapsible in the SEO tab.
+* Social settings tab in the metabox now contains collapsibles instead of tabs.
+* Adds style for padding to the metabox menu to avoid it being overwritten by custom editor styles. Props to [@emilyatmobtown](https://github.com/emilyatmobtown).
+* Improves sanitization of the schema output.
 
 Bugfixes:
 
-* Fixes a bug where a Flesch reading ease score of exactly 90 would trigger incorrect feedback.
-* Fixes a bug where the taxonomy sitemap provider would not handle private taxonomies as expected, resulting in sitemaps not being accessible in specific situations.
-* Fixes a bug where an empty twitter description instead of the term description would be shown.
-* Fixes a bug where 'undefined index' warnings would be given when saving a Facebook image.
-* Fixes a bug where the Recalibration Beta could not be loaded in combination with specific server configurations.
+* Fixes a bug where the `WP_Query::get_posts()` method would be called multiple times when the query includes several taxonomy terms, resulting in different results. Props to [@Chouby](https://github.com/Chouby).
+* Fixes a bug where the checkbox in the customizer about showing the blog page in the breadcrumbs would do exactly the opposite of what it promised. Props to [@garrett-eclipse](https://github.com/garrett-eclipse).
+* Fixes a bug where the snippet title and meta description fields would still be left-to-right when the site was set to a right-to-left language.
 
 = Earlier versions =
-
-For the changelog of earlier versions, please refer to https://yoa.st/yoast-seo-changelog
+For the changelog of earlier versions, please refer to [the changelog on yoast.com](https://yoa.st/yoast-seo-changelog).

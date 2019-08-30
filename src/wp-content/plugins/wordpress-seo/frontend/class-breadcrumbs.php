@@ -108,6 +108,8 @@ class WPSEO_Breadcrumbs {
 	private $output;
 
 	/**
+	 * Holds the WooCommerce shop page instance.
+	 *
 	 * @var WPSEO_WooCommerce_Shop_Page
 	 */
 	private $woocommerce_shop_page;
@@ -249,9 +251,9 @@ class WPSEO_Breadcrumbs {
 	/**
 	 * Get a term's parents.
 	 *
-	 * @param    object $term Term to get the parents for.
+	 * @param object $term Term to get the parents for.
 	 *
-	 * @return    array
+	 * @return array
 	 */
 	private function get_term_parents( $term ) {
 		$tax     = $term->taxonomy;
@@ -361,7 +363,6 @@ class WPSEO_Breadcrumbs {
 	 * Determine the crumbs which should form the breadcrumb.
 	 */
 	private function set_crumbs() {
-		/** @var WP_Query $wp_query */
 		global $wp_query;
 
 		$this->maybe_add_home_crumb();
@@ -629,7 +630,7 @@ class WPSEO_Breadcrumbs {
 	private function add_crumbs_for_taxonomy() {
 		$term = $GLOBALS['wp_query']->get_queried_object();
 
-		// @todo adjust function name!!
+		// @todo adjust function name.
 		$this->maybe_add_preferred_term_parent_crumb( $term );
 
 		$this->maybe_add_term_parent_crumbs( $term );
@@ -784,11 +785,11 @@ class WPSEO_Breadcrumbs {
 	}
 
 	/**
-	 * Retrieve link url and text based on post id
+	 * Retrieve link url and text based on post id.
 	 *
 	 * @param int $id Post ID.
 	 *
-	 * @return array Array of link text and url
+	 * @return array Array of link text and url.
 	 */
 	private function get_link_info_for_id( $id ) {
 		$link         = array();
@@ -798,16 +799,6 @@ class WPSEO_Breadcrumbs {
 		if ( $link['text'] === '' ) {
 			$link['text'] = wp_strip_all_tags( get_the_title( $id ), true );
 		}
-
-		/**
-		 * Filter: 'wp_seo_get_bc_title' - Allow developer to filter the Yoast SEO Breadcrumb title.
-		 *
-		 * @deprecated 5.8
-		 * @api string $link_text The Breadcrumb title text.
-		 *
-		 * @param int $link_id The post ID.
-		 */
-		$link['text'] = apply_filters_deprecated( 'wp_seo_get_bc_title', array( $link['text'], $id ), 'WPSEO 5.8', 'wpseo_breadcrumb_single_link_info' );
 
 		return $link;
 	}
@@ -958,7 +949,7 @@ class WPSEO_Breadcrumbs {
 					$inner_elm = 'strong';
 				}
 
-				$link_output .= '<' . $inner_elm . ' class="breadcrumb_last">' . $link['text'] . '</' . $inner_elm . '>';
+				$link_output .= '<' . $inner_elm . ' class="breadcrumb_last" aria-current="page">' . $link['text'] . '</' . $inner_elm . '>';
 				// This is the last element, now close all previous elements.
 				while ( $i > 0 ) {
 					$link_output .= '</' . $this->element . '>';
@@ -998,7 +989,7 @@ class WPSEO_Breadcrumbs {
 	}
 
 	/**
-	 * Wrap a complete breadcrumb string in a Breadcrumb RDFA wrapper.
+	 * Wrap a complete breadcrumb string in a wrapper.
 	 */
 	private function wrap_breadcrumb() {
 		if ( is_string( $this->output ) && $this->output !== '' ) {
